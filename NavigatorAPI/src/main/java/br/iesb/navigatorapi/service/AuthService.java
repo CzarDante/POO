@@ -15,15 +15,14 @@ public class AuthService {
 
     public List<UserEntity> users = new ArrayList<UserEntity>();
 
-    public UserEntity login(UserDTO info) {
-        String token = info.getToken();
-        UserEntity user = new UserEntity();
+    public void login(String token) {
+
         for (UserEntity u : users) {
             if (u.getToken().equals(token)) {
-                user = u;
+                System.out.println("Logado bobao\n" + u.getName() + "\n" + u.getToken());
+                return;
             }
         }
-        return user;
     }
 
     public void signup(String username) {
@@ -51,7 +50,6 @@ public class AuthService {
         entity.setToken(token);
         users.add(entity);
 
-        System.out.println("pastel");
         // return 0;
     }
 }
