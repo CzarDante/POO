@@ -26,27 +26,27 @@ public class AuthService {
         return user;
     }
 
-    public void signup(UserDTO user) {
+    public void signup(String username) {
 
         // Nome sem caractere especial
 
-        if (user.getName().trim().equals("")) {
+        if (username.trim().equals("")) {
             // Erro de nome vazio
             // return 1;
         }
 
-        if (user.getName().trim().split(" ").length != 1) {
+        if (username.trim().split(" ").length != 1) {
             // Erro de nome com espaço
             // return 2;
         }
 
-        if (user.getName().contains("@")) {
+        if (username.contains("@")) {
             // Erro de nome com caractere especial
             // return 3;
         }
 
         UserEntity entity = new UserEntity();
-        entity.setName(user.getName());
+        entity.setName(username);
         String token = UUID.randomUUID().toString();
         entity.setToken(token);
         users.add(entity);
