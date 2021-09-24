@@ -1,7 +1,7 @@
 package br.iesb.navigatorapi.service;
 
 import br.iesb.navigatorapi.dto.UserDTO;
-import br.iesb.navigatorapi.model.NavigatorEntity;
+import br.iesb.navigatorapi.model.UserEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -13,50 +13,45 @@ import java.util.UUID;
 @Scope("singleton")
 public class AuthService {
 
-    public List<NavigatorEntity> user = new ArrayList<>();
+    public List<UserEntity> users = new ArrayList<UserEntity>();
 
-    public String login(UserDTO info){
-        
-        String name = info.getName();
+    public UserEntity login(UserDTO info) {
         String token = info.getToken();
-
-        for(NavigatorEntity u : user){
-            if(u.getName()){
-                return u.getToken();
+        UserEntity user = new UserEntity();
+        for (UserEntity u : users) {
+            if (u.getToken().equals(token)) {
+                user = u;
             }
         }
-
+        return user;
     }
 
-    public int signup(UserDTO user) {
+    public void signup(UserDTO user) {
 
         // Nome sem caractere especial
 
-        //nome vazio
-        if(user.getName().trim().equals("")) {
-            //Erro de nome vazio
-            return 1;
+        if (user.getName().trim().equals("")) {
+            // Erro de nome vazio
+            // return 1;
         }
 
-        //Nome sem espaço
-        if(user.getName().trim().split(" ").length != 1) {
-            //Erro de nome com espaço
-            return 2;
+        if (user.getName().trim().split(" ").length != 1) {
+            // Erro de nome com espaço
+            // return 2;
         }
 
-        //Checar se nome de usuário já existe
-        // Receber todos os usuários
-        // For each
-        // Return 3
+        if (user.getName().contains("@")) {
+            // Erro de nome com caractere especial
+            // return 3;
+        }
 
-            
-
-        NavigatorEntity entity = new NavigatorEntity();
+        UserEntity entity = new UserEntity();
         entity.setName(user.getName());
         String token = UUID.randomUUID().toString();
         entity.setToken(token);
+        users.add(entity);
 
-        return 0;
+        System.out.println("pastel");
+        // return 0;
     }
 }
-
