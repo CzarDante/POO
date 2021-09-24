@@ -15,8 +15,9 @@ public class AuthController {
     private AuthService service;
 
     @PostMapping("/create")
-    public void signup(@RequestBody UserDTO user) {
-        service.signup(user);
+    public void signup(@RequestBody String username) {
+
+        service.signup(username);
 
     }
 
