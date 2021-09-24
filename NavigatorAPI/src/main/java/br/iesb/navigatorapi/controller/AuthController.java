@@ -1,5 +1,6 @@
 package br.iesb.navigatorapi.controller;
 
+import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.service.AuthService;
 import br.iesb.navigatorapi.dto.UserDTO;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,9 @@ public class AuthController {
     private AuthService service;
 
     @PostMapping("/create")
-    public void signup(@RequestBody String username) {
+    public void signup(@RequestBody UserEntity user) {
 
-        service.signup(username);
+        service.signup(user.getName());
 
     }
 

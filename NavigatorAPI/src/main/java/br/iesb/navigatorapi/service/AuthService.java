@@ -16,9 +16,8 @@ public class AuthService {
     public List<UserEntity> users = new ArrayList<UserEntity>();
 
     public void login(String token) {
-
         for (UserEntity u : users) {
-            if (u.getToken().equals(token)) {
+            if (token.contains(u.getToken())) {
                 System.out.println("Logado bobao\n" + u.getName() + "\n" + u.getToken());
                 return;
             }
@@ -49,6 +48,7 @@ public class AuthService {
         String token = UUID.randomUUID().toString();
         entity.setToken(token);
         users.add(entity);
+        System.out.println(entity.getToken());
 
         // return 0;
     }
