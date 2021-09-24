@@ -10,7 +10,7 @@ public class AuthController {
 
 
 
-    public ResponseEntity<string> signup(@RequestBody UserDTO user){
+    public ResponseEntity<String> signup(@RequestBody UserDTO user){
         int result
     }
 

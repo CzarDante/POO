@@ -6,7 +6,7 @@ public class NavigatorRepo {
 
     ArrayList<NavigatorEntity> Users = new ArrayList<NavigatorEntity>();
 
-    public NavigatorEntity userProfile(){
+    public NavigatorEntity userProfile() {
         return this.Users;
     }
 
