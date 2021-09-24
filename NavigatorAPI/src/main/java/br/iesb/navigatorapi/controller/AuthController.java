@@ -21,4 +21,9 @@ public class AuthController {
 
     }
 
+    @PostMapping("/login")
+    public void login(@RequestBody String token) {
+        service.login(token);
+    }
+
 }
