@@ -4,6 +4,7 @@ import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.BoatEntity;
 import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.service.AuthService;
+import br.iesb.navigatorapi.service.DTOEntityConversions;
 import br.iesb.navigatorapi.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ public class PlayerController {
     private AuthService service;
     @Autowired
     private PlayerService playerService;
+    @Autowired
+    DTOEntityConversions conversions;
 
     @PostMapping("/profile")
     public ResponseEntity profile(@RequestHeader("Token") String token) {
@@ -28,13 +31,7 @@ public class PlayerController {
         }
 
         UserDTO filteredUser = new UserDTO();
-
-        filteredUser.setName(authToken.getName());
-        filteredUser.setWood(authToken.getWood());
-        filteredUser.setMoney(authToken.getMoney());
-        filteredUser.setMetal(authToken.getMetal());
-        filteredUser.setBoats(authToken.getBoats());
-
+        filteredUser = conversions.EntityToDTO(authToken);
         return ResponseEntity.ok().body(filteredUser);
     }
 
