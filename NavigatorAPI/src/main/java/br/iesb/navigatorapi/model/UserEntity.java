@@ -10,6 +10,12 @@ public class UserEntity {
     private int metal;
     /* private ArrayList<Boats> boats = new ArrayList<Boats>(); */
 
+    public UserEntity(){
+        this.setMoney(100);
+        this.setWood(500);
+        this.setMetal(500);
+    }
+
     public String getName() {
         return name;
     }
