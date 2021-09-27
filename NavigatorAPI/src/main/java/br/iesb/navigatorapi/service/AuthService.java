@@ -2,6 +2,7 @@ package br.iesb.navigatorapi.service;
 
 import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.repository.UserRepository;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,14 @@ import java.util.UUID;
 @Scope("singleton")
 public class AuthService {
 
-    public List<UserEntity> users = new ArrayList<UserEntity>();
+    public UserRepository users;
+
+    public AuthService(){
+        this.users = new UserRepository();
+    }
 
     public UserEntity findUserByToken(String token){
-        for (UserEntity u : users) {
+        for (UserEntity u : users.getUserRepositoryInMemory()) {
             if(token.contains(u.getToken())){
                 return u;
             }
@@ -47,7 +52,7 @@ public class AuthService {
         entity.setName(username);
         String token = UUID.randomUUID().toString();
         entity.setToken(token);
-        users.add(entity);
+        users.setUserRepositoryInMemory(entity);
         return entity.getToken();
 
     }

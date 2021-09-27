@@ -19,12 +19,12 @@ public class PlayerController {
     private PlayerService playerService;
 
     @PostMapping("/profile")
-    public ResponseEntity<UserDTO> profile(@RequestHeader("Token") String token) {
+    public ResponseEntity profile(@RequestHeader("Token") String token) {
 
         UserEntity authToken = service.findUserByToken(token);
 
         if(authToken == null){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(400).body("User does not exists");
         }
 
         UserDTO filteredUser = new UserDTO();
@@ -39,7 +39,7 @@ public class PlayerController {
     }
 
     @PostMapping("/create-boat")
-    public ResponseEntity<BoatEntity> createBoat(@RequestHeader("Token") String token) {
+    public ResponseEntity createBoat(@RequestHeader("Token") String token) {
 
         UserEntity authToken = service.findUserByToken(token);
 
@@ -47,7 +47,12 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
 
+
         BoatEntity boat = playerService.createBoat(authToken);
+
+        if(boat == null){
+            return ResponseEntity.status(400).body("Insufficient resources");
+        }
 
         authToken.setBoats(boat);
 
