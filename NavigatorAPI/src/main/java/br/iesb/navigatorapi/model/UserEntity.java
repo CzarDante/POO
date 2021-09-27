@@ -2,13 +2,15 @@ package br.iesb.navigatorapi.model;
 
 //import java.util.ArrayList;
 
+import java.util.ArrayList;
+
 public class UserEntity {
     private String name;
     private String token;
     private int money;
     private int wood;
     private int metal;
-    /* private ArrayList<Boats> boats = new ArrayList<Boats>(); */
+    private ArrayList<BoatEntity> boats = new ArrayList<BoatEntity>();
 
     public UserEntity(){
         this.setMoney(100);
@@ -54,5 +56,13 @@ public class UserEntity {
 
     public void setMetal(int metal) {
         this.metal = metal;
+    }
+
+    public ArrayList<BoatEntity> getBoats() {
+        return boats;
+    }
+
+    public void setBoats(BoatEntity boats) {
+        this.boats.add(boats);
     }
 }

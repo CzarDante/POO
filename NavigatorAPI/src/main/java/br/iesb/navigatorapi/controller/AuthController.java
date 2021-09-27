@@ -23,16 +23,4 @@ public class AuthController {
         return ResponseEntity.ok().body(userToken);
     }
 
-    @PostMapping("/profile")
-    public ResponseEntity<UserEntity> profile(@RequestHeader("Token") String token) {
-
-        UserEntity authToken = service.findUserByToken(token);
-
-        if(authToken == null){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok().body(authToken);
-    }
-
 }
