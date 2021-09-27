@@ -6,6 +6,7 @@ import br.iesb.navigatorapi.dto.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,15 +17,22 @@ public class AuthController {
     private AuthService service;
 
     @PostMapping("/create")
-    public void signup(@RequestBody UserEntity user) {
+    public ResponseEntity<String> signup(@RequestBody UserEntity user) {
+        String userToken = service.signup(user.getName());
 
-        service.signup(user.getName());
-
+        return ResponseEntity.ok().body(userToken);
     }
 
-    @PostMapping("/login")
-    public void login(@RequestBody String token) {
-        service.login(token);
+    @PostMapping("/profile")
+    public ResponseEntity<UserEntity> profile(@RequestHeader("Token") String token) {
+
+        UserEntity authToken = service.findUserByToken(token);
+
+        if(authToken == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(authToken);
     }
 
 }

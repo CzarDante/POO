@@ -15,16 +15,16 @@ public class AuthService {
 
     public List<UserEntity> users = new ArrayList<UserEntity>();
 
-    public void login(String token) {
+    public UserEntity findUserByToken(String token){
         for (UserEntity u : users) {
-            if (token.contains(u.getToken())) {
-                System.out.println("Logado bobao\n" + u.getName() + "\n" + u.getToken());
-                return;
+            if(token.contains(u.getToken())){
+                return u;
             }
         }
+        return null;
     }
 
-    public void signup(String username) {
+    public String signup(String username) {
 
         // Nome sem caractere especial
 
@@ -48,8 +48,7 @@ public class AuthService {
         String token = UUID.randomUUID().toString();
         entity.setToken(token);
         users.add(entity);
-        System.out.println(entity.getToken());
+        return entity.getToken();
 
-        // return 0;
     }
 }
