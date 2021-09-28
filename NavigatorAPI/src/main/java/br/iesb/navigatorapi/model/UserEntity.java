@@ -2,21 +2,29 @@ package br.iesb.navigatorapi.model;
 
 //import java.util.ArrayList;
 
+import br.iesb.navigatorapi.dto.BoatDTO;
+
 import java.util.ArrayList;
 
 public class UserEntity {
     private String name;
     private String token;
+    /*
     private int money;
     private int wood;
     private int metal;
-    private ArrayList<BoatEntity> boats = new ArrayList<BoatEntity>();
+    */
+    private InventoryEntity inventory = new InventoryEntity();
+    private ArrayList<BoatDTO> boats = new ArrayList<BoatDTO>();
 
+    /*
     public UserEntity(){
         this.setMoney(100);
         this.setWood(500);
         this.setMetal(500);
     }
+
+     */
 
     public String getName() {
         return name;
@@ -34,6 +42,7 @@ public class UserEntity {
         this.token = token;
     }
 
+    /*
     public int getMoney() {
         return money;
     }
@@ -58,11 +67,21 @@ public class UserEntity {
         this.metal = metal;
     }
 
-    public ArrayList<BoatEntity> getBoats() {
+     */
+
+    public InventoryEntity getInventory() {
+        return this.inventory;
+    }
+
+    public void setInventory(InventoryEntity inventory) {
+        this.inventory = inventory;
+    }
+
+    public ArrayList<BoatDTO> getBoats() {
         return boats;
     }
 
-    public void setBoats(BoatEntity boats) {
-        this.boats.add(boats);
+    public void setBoats(ArrayList<BoatDTO> boats) {
+        this.boats = boats;
     }
 }

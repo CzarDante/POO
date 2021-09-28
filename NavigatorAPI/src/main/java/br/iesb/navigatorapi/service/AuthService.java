@@ -3,6 +3,7 @@ package br.iesb.navigatorapi.service;
 import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,13 @@ public class AuthService {
 
     public UserRepository users;
 
+    @Autowired
+    public PlayerService playerService;
+
     public AuthService(){
         this.users = new UserRepository();
     }
+
 
     public UserEntity findUserByToken(String token){
         for (UserEntity u : users.getUserRepositoryInMemory()) {
@@ -48,12 +53,16 @@ public class AuthService {
             // return 3;
         }
 
-        UserEntity entity = new UserEntity();
-        entity.setName(username);
+        UserEntity newPlayer = new UserEntity();
         String token = UUID.randomUUID().toString();
-        entity.setToken(token);
-        users.setUserRepositoryInMemory(entity);
-        return entity.getToken();
+        newPlayer = playerService.createPlayer(token, username, 3);
+        users.setUserRepositoryInMemory(newPlayer);
+        //UserEntity entity = new UserEntity();
+        //entity.setName(username);
+        //entity.setToken(token);
+        //users.setUserRepositoryInMemory(entity);
+        //return entity.getToken();
+        return newPlayer.getToken();
 
     }
 }
