@@ -16,6 +16,7 @@ public class DTOEntityConversions {
         userDTO.setInventory(userEntity.getInventory());
         userDTO.setBoats(userEntity.getBoats());
         userDTO.setCurrentIslandID(userEntity.getCurrentIslandID());
+        userDTO.setCloseIslandsID(userEntity.getCloseIslandsID());
 
         return userDTO;
     }

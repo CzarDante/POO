@@ -48,4 +48,12 @@ public class UserDTO {
     public void setCurrentIslandID(String currentIslandID) {
         this.currentIslandID = currentIslandID;
     }
+
+    public ArrayList<String> getCloseIslandsID() {
+        return closeIslandsID;
+    }
+
+    public void setCloseIslandsID(ArrayList<String> closeIslandsID) {
+        this.closeIslandsID = closeIslandsID;
+    }
 }

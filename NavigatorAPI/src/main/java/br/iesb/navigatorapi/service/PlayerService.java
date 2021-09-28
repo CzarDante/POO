@@ -49,11 +49,10 @@ public class PlayerService {
 
         newPlayer.setCurrentIslandID(islandService.createIsland());
 
-        /*
         for(int i = 0; i < random.nextInt(5 - 3) + 3; i++) {
             newPlayer.setCloseIslandsID(islandService.createIsland());
         }
-         */
+
 
         return newPlayer;
     }

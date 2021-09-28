@@ -57,11 +57,6 @@ public class AuthService {
         String token = UUID.randomUUID().toString();
         newPlayer = playerService.createPlayer(token, username, 3);
         users.setUserRepositoryInMemory(newPlayer);
-        //UserEntity entity = new UserEntity();
-        //entity.setName(username);
-        //entity.setToken(token);
-        //users.setUserRepositoryInMemory(entity);
-        //return entity.getToken();
         return newPlayer.getToken();
 
     }
