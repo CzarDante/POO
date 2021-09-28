@@ -136,6 +136,17 @@ public class InventoryService {
         return inventoryMain;
     }
 
+    public ItemEntity findItem (ItemEntity.ItemID id, InventoryEntity inventoryMain) {
+
+        for(ItemEntity item : inventoryMain.getItems()) {
+            if(item.getResource() == id) {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     public boolean isItemsContained(InventoryEntity inventoryToCompare, InventoryEntity inventoryMain) {
 
         for(ItemEntity itemToCompare : inventoryToCompare.getItems()) {
@@ -167,4 +178,5 @@ public class InventoryService {
         }
         return false;
     }
+
 }

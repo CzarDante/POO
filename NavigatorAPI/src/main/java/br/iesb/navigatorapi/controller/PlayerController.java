@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,7 +25,6 @@ public class PlayerController {
     DTOEntityConversions conversions;
     @Autowired
     private BoatService boatService;
-
 
     @PostMapping("/profile")
     public ResponseEntity profile(@RequestHeader("Token") String token) {
@@ -40,32 +40,9 @@ public class PlayerController {
         return ResponseEntity.ok().body(filteredUser);
     }
 
-
-    /*
     @PostMapping("/create-boat")
-    public ResponseEntity createBoat(@RequestHeader("Token") String token) {
+    public ResponseEntity<BoatEntity> createBoat(@RequestHeader("Token") String token, @RequestParam BoatEntity.boatID id) {
 
-        UserEntity authToken = authService.findUserByToken(token);
-
-        if(authToken == null){
-            return ResponseEntity.notFound().build();
-        }
-
-
-        BoatEntity boat = playerService.createBoat(authToken);
-
-        if(boat == null){
-            return ResponseEntity.status(400).body("Insufficient resources");
-        }
-
-        authToken.setBoats(boat);
-
-        return ResponseEntity.ok().body(boat);
-    }
-     */
-
-    @PostMapping("/create-boat/sloop")
-    public ResponseEntity<BoatEntity> createBoat(@RequestHeader("Token") String token) {
 
         UserEntity authToken = authService.findUserByToken(token);
 
@@ -74,7 +51,7 @@ public class PlayerController {
         }
 
         BoatEntity sloop = new BoatEntity();
-        sloop = boatService.createBoat(BoatEntity.boatID.sloop, token);
+        sloop = boatService.createBoat(id, token);
 
 
         UserEntity result = new UserEntity();
@@ -84,10 +61,6 @@ public class PlayerController {
         if(result == null){
             return ResponseEntity.notFound().build();
         }
-
-
-        //authToken.setBoats(boat);
-
 
         return ResponseEntity.ok().body(sloop);
     }

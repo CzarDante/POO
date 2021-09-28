@@ -10,12 +10,11 @@ public class UserDTO {
 
     private String name;
     private InventoryEntity inventory = new InventoryEntity();
-    /*
-    private int money;
-    private int wood;
-    private int metal;
-     */
+
     private ArrayList<BoatDTO> boats;
+
+    private String currentIslandID;
+    private ArrayList<String> closeIslandsID = new ArrayList<String>();
 
     public String getName() {
         return name;
@@ -33,31 +32,6 @@ public class UserDTO {
         this.inventory = inventory;
     }
 
-    /*
-    public int getMoney() {
-        return money;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
-    public int getWood() {
-        return wood;
-    }
-
-    public void setWood(int wood) {
-        this.wood = wood;
-    }
-
-    public int getMetal() {
-        return metal;
-    }
-
-    public void setMetal(int metal) {
-        this.metal = metal;
-    }
-     */
 
     public ArrayList<BoatDTO> getBoats() {
         return boats;
@@ -65,5 +39,13 @@ public class UserDTO {
 
     public void setBoats(ArrayList<BoatDTO> boats) {
         this.boats = boats;
+    }
+
+    public String getCurrentIslandID() {
+        return currentIslandID;
+    }
+
+    public void setCurrentIslandID(String currentIslandID) {
+        this.currentIslandID = currentIslandID;
     }
 }

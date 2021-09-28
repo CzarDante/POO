@@ -7,7 +7,10 @@ public class ItemEntity {
 
     public enum ItemID{
         wood,
-        metal,
+        copper,
+        iron,
+        steel,
+        carbonFiber,
         money;
     }
 

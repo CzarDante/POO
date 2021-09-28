@@ -5,17 +5,23 @@ import br.iesb.navigatorapi.model.BoatEntity;
 import br.iesb.navigatorapi.model.InventoryEntity;
 import br.iesb.navigatorapi.model.ItemEntity;
 import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.service.island.IslandService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.UUID;
 
 @Service
 @Scope("singleton")
 public class PlayerService {
 
+    Random random = new Random();
+
+    @Autowired
+    IslandService islandService;
     @Autowired
     ItemService itemService;
     @Autowired
@@ -33,38 +39,25 @@ public class PlayerService {
         newInventory.setSize(inventorySize);
 
         //Criando itens hardcoded para testar o resto das coisas...
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.wood, 5), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.metal, 10), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.money, 10), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.wood, 5), newInventory);
+        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.wood, 5000), newInventory);
+        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.iron, 5000), newInventory);
+        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.steel, 5000), newInventory);
+        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.carbonFiber, 500), newInventory);
+        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.copper, 5000), newInventory);
+        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.money, 5000), newInventory);
         newPlayer.setInventory(newInventory);
+
+        newPlayer.setCurrentIslandID(islandService.createIsland());
+
+        /*
+        for(int i = 0; i < random.nextInt(5 - 3) + 3; i++) {
+            newPlayer.setCloseIslandsID(islandService.createIsland());
+        }
+         */
 
         return newPlayer;
     }
 
-    /*
-    public BoatEntity createBoat(UserEntity player){
-
-
-        if(inventoryService.isItemsContained(player.getInventory(), inventoryBarcoRequiredToCraft)) {
-            inventoryPlayer = inventoryService.subtractFromInventory(inventoryBarcoRequiredToCraft, inven)
-        }
-
-        if(player.getWood() >= 500 && player.getMetal() >= 500){
-            player.setMetal(player.getMetal() - 500);
-            player.setWood(player.getWood() - 500);
-
-            BoatEntity boat = new BoatEntity();
-            boat.setId(UUID.randomUUID().toString());
-            boat.setMaxDistance(10);
-            boat.setMaxLoad(5000);
-            boat.setSize(5);
-
-            return boat;
-        }
-        return null;
-    }
-    */
 
     public UserEntity createBoat(BoatEntity desiredBoat, UserEntity player) {
 
@@ -86,7 +79,5 @@ public class PlayerService {
         }
 
     }
-
-
 
 }

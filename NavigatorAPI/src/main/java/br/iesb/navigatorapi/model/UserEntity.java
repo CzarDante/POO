@@ -17,6 +17,9 @@ public class UserEntity {
     private InventoryEntity inventory = new InventoryEntity();
     private ArrayList<BoatDTO> boats = new ArrayList<BoatDTO>();
 
+    private String currentIslandID;
+    private ArrayList<String> closeIslandsID = new ArrayList<String>();
+
     /*
     public UserEntity(){
         this.setMoney(100);
@@ -83,5 +86,21 @@ public class UserEntity {
 
     public void setBoats(ArrayList<BoatDTO> boats) {
         this.boats = boats;
+    }
+
+    public String getCurrentIslandID() {
+        return currentIslandID;
+    }
+
+    public void setCurrentIslandID(String currentIslandID) {
+        this.currentIslandID = currentIslandID;
+    }
+
+    public ArrayList<String> getCloseIslandsID() {
+        return closeIslandsID;
+    }
+
+    public void setCloseIslandsID(String closeIslandsID) {
+        this.closeIslandsID.add(closeIslandsID);
     }
 }

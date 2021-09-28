@@ -14,10 +14,8 @@ public class DTOEntityConversions {
 
         userDTO.setName(userEntity.getName());
         userDTO.setInventory(userEntity.getInventory());
-        //userDTO.setWood(userEntity.getWood());
         userDTO.setBoats(userEntity.getBoats());
-        //userDTO.setMetal(userEntity.getMetal());
-        //userDTO.setMoney(userEntity.getMoney());
+        userDTO.setCurrentIslandID(userEntity.getCurrentIslandID());
 
         return userDTO;
     }
