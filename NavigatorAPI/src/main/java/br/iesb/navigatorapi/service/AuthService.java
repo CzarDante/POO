@@ -60,4 +60,8 @@ public class AuthService {
         return newPlayer.getToken();
 
     }
+
+    public void deletePlayer(UserEntity u){
+        this.users.removeUserRepositoryInMemory(u);
+    }
 }

@@ -10,10 +10,7 @@ import br.iesb.navigatorapi.service.DTOEntityConversions;
 import br.iesb.navigatorapi.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PlayerController {
@@ -66,6 +63,18 @@ public class PlayerController {
     }
 
 
+    @DeleteMapping("/delete")
+    public ResponseEntity deletePlayer(@RequestParam String id){
 
+        UserEntity authToken = authService.findUserByToken(id);
+
+        if(authToken == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        authService.deletePlayer(authToken);
+
+        return ResponseEntity.ok().body("User deleted");
+    }
 
 }

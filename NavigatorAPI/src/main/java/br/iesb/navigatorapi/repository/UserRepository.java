@@ -18,4 +18,8 @@ public class UserRepository {
     public void setUserRepositoryInMemory(UserEntity userRepositoryInMemory) {
         this.userRepositoryInMemory.add(userRepositoryInMemory);
     }
+
+    public void removeUserRepositoryInMemory(UserEntity userRepositoryInMemory) {
+        this.userRepositoryInMemory.remove(userRepositoryInMemory);
+    }
 }
