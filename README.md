@@ -1,7 +1,11 @@
 # NavigatorAPI
 Uma API gamificada com sobre exploração e sobrevivencia em que seu objetivo como player e desbravar o mar atras de ilhas para conseguir recursos e conseguir assim construir barcos mais fortes. Com um sistema de mercado global em que os player poderam comerciar os itens com outros players (Mercado à ser implementado na versão P2).
 
-#Rotas
+# Rotas
+
+###### GET
+/list-boats - Lista os barcos do jogo e o custo da criação de cada um.</br></br>
+
 ###### POST
 /create - Rota para criação da conta do player, recebe de parametros no body um JSON com o name do usuário.<br/>
 
