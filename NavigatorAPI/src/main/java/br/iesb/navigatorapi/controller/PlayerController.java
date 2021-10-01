@@ -1,5 +1,6 @@
 package br.iesb.navigatorapi.controller;
 
+import br.iesb.navigatorapi.dto.BoatDTO;
 import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.BoatEntity;
 import br.iesb.navigatorapi.model.UserEntity;
@@ -39,7 +40,7 @@ public class PlayerController {
     }
 
     @PostMapping("/create-boat")
-    public ResponseEntity<BoatEntity> createBoat(@RequestHeader("Token") String token, @RequestParam BoatEntity.boatID id) {
+    public ResponseEntity<BoatDTO> createBoat(@RequestHeader("Token") String token, @RequestParam BoatEntity.boatID id) {
 
 
         UserEntity authToken = authService.findUserByToken(token);
@@ -48,17 +49,12 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
 
-
         BoatEntity desiredBoat = boatService.createBoat(id, token);
-
-        UserEntity result = playerService.craftBoat(desiredBoat, authToken);
-
-
-        if(result == null){
+        if(!playerService.craftBoat(desiredBoat, authToken)){
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().body(desiredBoat);
+        return ResponseEntity.ok().body(conversions.EntityToDTO(desiredBoat));
     }
 
 
@@ -81,17 +77,6 @@ public class PlayerController {
 
         List<String> items = new ArrayList<>();
 
-        /*
-        String sloop = "Type: sloopMax Distance:100 Wood: 500";
-        String sailboat = "Type: sailboat  Max Distance:200 Wood: 1000 Iron: 200";
-        String brigantine = "Type: brigantine Max Distance:300 Wood: 1500 Copper: 200";
-        String galleon = "Type: brigantine Max Distance:400 Wood: 2000 Copper: 200 Iron: 200 Steel: 200 Carbon Fiber: 200";
-
-        items.add(sloop);
-        items.add(sailboat);
-        items.add(brigantine);
-        items.add(galleon);
-         */
 
         for(BoatEntity.boatID id : BoatEntity.boatID.values()) {
             BoatEntity boat = boatService.createBoat(id, "");

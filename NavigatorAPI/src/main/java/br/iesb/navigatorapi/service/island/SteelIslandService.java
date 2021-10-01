@@ -26,11 +26,11 @@ public class SteelIslandService {
         SteelIslandEntity newSteelIsland = new SteelIslandEntity();
 
         InventoryEntity avaibleResources = new InventoryEntity();
-        ItemEntity newItem = new ItemEntity();
+        ItemEntity newItem;
         newItem = itemService.createItem(ItemEntity.ItemID.wood, random.nextInt(1000 - 500) + 500);
-        avaibleResources = inventoryService.addItemToInventory(newItem, avaibleResources);
+        inventoryService.addItemToInventory(newItem, avaibleResources);
         newItem = itemService.createItem(ItemEntity.ItemID.steel, random.nextInt(100 - 25) + 25);
-        avaibleResources = inventoryService.addItemToInventory(newItem, avaibleResources);
+        inventoryService.addItemToInventory(newItem, avaibleResources);
 
 
         String token = UUID.randomUUID().toString();

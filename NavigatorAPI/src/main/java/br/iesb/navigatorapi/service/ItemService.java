@@ -13,18 +13,15 @@ public class ItemService {
         return newItem;
     }
 
-    public ItemEntity subtractQuantity(int quantitySubtrahend, ItemEntity itemMain) {
+    public void subtractQuantity(int quantitySubtrahend, ItemEntity itemMain) {
         int result = itemMain.getQuantity() - quantitySubtrahend;
         itemMain.setQuantity(result);
-        return itemMain;
     }
 
-    public ItemEntity addQuantity(int quantityAddend, ItemEntity itemMain) {
+    public void addQuantity(int quantityAddend, ItemEntity itemMain) {
         int result = itemMain.getQuantity() + quantityAddend;
         itemMain.setQuantity(result);
-        return itemMain;
     }
-
 
     public boolean isEnoughQuantity(ItemEntity itemToCompare, ItemEntity itemMain) {
 

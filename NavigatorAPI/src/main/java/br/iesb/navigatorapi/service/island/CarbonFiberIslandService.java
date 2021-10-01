@@ -25,11 +25,11 @@ public class CarbonFiberIslandService {
         CarbonFiberIslandEntity newCarbonFiberIsland = new CarbonFiberIslandEntity();
 
         InventoryEntity avaibleResources = new InventoryEntity();
-        ItemEntity newItem = new ItemEntity();
+        ItemEntity newItem;
         newItem = itemService.createItem(ItemEntity.ItemID.wood, random.nextInt(500 - 100) + 100);
-        avaibleResources = inventoryService.addItemToInventory(newItem, avaibleResources);
+        inventoryService.addItemToInventory(newItem, avaibleResources);
         newItem = itemService.createItem(ItemEntity.ItemID.carbonFiber, random.nextInt(100 - 25) + 25);
-        avaibleResources = inventoryService.addItemToInventory(newItem, avaibleResources);
+        inventoryService.addItemToInventory(newItem, avaibleResources);
 
 
         String token = UUID.randomUUID().toString();
@@ -43,6 +43,7 @@ public class CarbonFiberIslandService {
 
     }
 
+    /*
     public InventoryEntity gatherResources (int timeSpent, CarbonFiberIslandEntity island) {
 
         InventoryEntity gatheredResources = new InventoryEntity();
@@ -71,7 +72,7 @@ public class CarbonFiberIslandService {
 
             }
 
-            gatheredResources = inventoryService.addItemToInventory(carbonFiberFound, gatheredResources);
+            inventoryService.addItemToInventory(carbonFiberFound, gatheredResources);
 
         }
 
@@ -96,11 +97,12 @@ public class CarbonFiberIslandService {
 
             }
 
-            gatheredResources = inventoryService.addItemToInventory(carbonFiberFound, gatheredResources);
+            inventoryService.addItemToInventory(carbonFiberFound, gatheredResources);
 
         }
 
         return gatheredResources;
     }
+     */
 
 }

@@ -29,19 +29,19 @@ public class IslandService {
     public String createIsland() {
         switch (islandTypes[random.nextInt(4)]) {
             case "Carbon":
-                CarbonFiberIslandEntity carbonFiberIslandEntity = new CarbonFiberIslandEntity();
+                CarbonFiberIslandEntity carbonFiberIslandEntity;
                 carbonFiberIslandEntity = carbonFiberIslandService.createCarbonFiberIslandService();
                 return carbonFiberIslandEntity.getId();
             case "Copper":
-                CopperIslandEntity copperIslandEntity = new CopperIslandEntity();
+                CopperIslandEntity copperIslandEntity;
                 copperIslandEntity = copperIslandService.createCopperIslandService();
                 return copperIslandEntity.getId();
             case "Iron":
-                IronIslandEntity ironIslandEntity = new IronIslandEntity();
+                IronIslandEntity ironIslandEntity;
                 ironIslandEntity = ironIslandService.createIronIslandService();
                 return ironIslandEntity.getId();
             case "Steel":
-                SteelIslandEntity steelIslandEntity = new SteelIslandEntity();
+                SteelIslandEntity steelIslandEntity;
                 steelIslandEntity = steelIslandService.createSteelIslandService();
                 return steelIslandEntity.getId();
         }

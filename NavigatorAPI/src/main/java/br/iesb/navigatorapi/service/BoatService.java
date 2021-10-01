@@ -25,7 +25,7 @@ public class BoatService {
             case sloop:
                 requiredToCraft = inventoryService.createInventory(2);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 500);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(5);
                 newBoat.setMaxDistance(100);
@@ -34,9 +34,9 @@ public class BoatService {
             case sailboat:
                 requiredToCraft = inventoryService.createInventory(2);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 1000);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.iron, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(10);
                 newBoat.setMaxDistance(200);
@@ -44,24 +44,24 @@ public class BoatService {
             case brigantine:
                 requiredToCraft = inventoryService.createInventory(2);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 1500);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.copper, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 cargo.setSize(15);
                 newBoat.setMaxDistance(300);
                 break;
             case galleon:
                 requiredToCraft = inventoryService.createInventory(5);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 2000);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.steel, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.iron, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.copper, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.carbonFiber, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(20);
                 newBoat.setMaxDistance(400);

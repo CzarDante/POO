@@ -38,13 +38,34 @@ public class PlayerService {
         InventoryEntity newInventory = new InventoryEntity();
         newInventory.setSize(inventorySize);
 
+
         //Criando itens hardcoded para testar o resto das coisas...
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.wood, 5000), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.iron, 5000), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.steel, 5000), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.carbonFiber, 500), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.copper, 5000), newInventory);
-        newInventory = inventoryService.addItemToInventory(itemService.createItem(ItemEntity.ItemID.money, 5000), newInventory);
+        ItemEntity newItem;
+        for(ItemEntity.ItemID itemID : ItemEntity.ItemID.values()) {
+            newItem = itemService.createItem(itemID, 5000);
+            inventoryService.addItemToInventory(newItem, newInventory);
+        }
+
+        /*
+        newItem = itemService.createItem(ItemEntity.ItemID.wood, 5000);
+        inventoryService.addItemToInventory(newItem, newInventory);
+
+        newItem = itemService.createItem(ItemEntity.ItemID.iron, 5000);
+        inventoryService.addItemToInventory(newItem, newInventory);
+
+        newItem = itemService.createItem(ItemEntity.ItemID.steel, 5000);
+        inventoryService.addItemToInventory(newItem, newInventory);
+
+        newItem = itemService.createItem(ItemEntity.ItemID.carbonFiber, 5000);
+        inventoryService.addItemToInventory(newItem, newInventory);
+
+        newItem = itemService.createItem(ItemEntity.ItemID.copper, 5000);
+        inventoryService.addItemToInventory(newItem, newInventory);
+
+        newItem = itemService.createItem(ItemEntity.ItemID.money, 5000);
+        inventoryService.addItemToInventory(newItem, newInventory);
+         */
+
         newPlayer.setInventory(newInventory);
 
         newPlayer.setCurrentIslandID(islandService.createIsland());
@@ -58,23 +79,20 @@ public class PlayerService {
     }
 
 
-    public UserEntity craftBoat(BoatEntity desiredBoat, UserEntity player) {
+    public boolean craftBoat(BoatEntity desiredBoat, UserEntity player) {
 
         InventoryEntity playerInventory = player.getInventory();
         InventoryEntity requiredToCraft = desiredBoat.getRequiredToCraft();
 
         if(inventoryService.isItemsContained(desiredBoat.getRequiredToCraft(), playerInventory)) {
-            playerInventory = inventoryService.subtractFromInventory(requiredToCraft, playerInventory);
-            player.setInventory(playerInventory);
+            inventoryService.subtractFromInventory(requiredToCraft, playerInventory);
             BoatDTO boatDTO = conversions.EntityToDTO(desiredBoat);
             player.getBoats().add(boatDTO);
-            return player;
+            return true;
         } else {
-            return null;
+            return false;
         }
 
     }
-
-
 
 }
