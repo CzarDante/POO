@@ -58,19 +58,15 @@ public class PlayerService {
     }
 
 
-    public UserEntity createBoat(BoatEntity desiredBoat, UserEntity player) {
+    public UserEntity craftBoat(BoatEntity desiredBoat, UserEntity player) {
 
-        InventoryEntity playerInventory = new InventoryEntity();
-        playerInventory = player.getInventory();
-
-        InventoryEntity requiredToCraft = new InventoryEntity();
-        requiredToCraft = desiredBoat.getRequiredToCraft();
+        InventoryEntity playerInventory = player.getInventory();
+        InventoryEntity requiredToCraft = desiredBoat.getRequiredToCraft();
 
         if(inventoryService.isItemsContained(desiredBoat.getRequiredToCraft(), playerInventory)) {
             playerInventory = inventoryService.subtractFromInventory(requiredToCraft, playerInventory);
             player.setInventory(playerInventory);
-            BoatDTO boatDTO = new BoatDTO();
-            boatDTO = conversions.EntityToDTO(desiredBoat);
+            BoatDTO boatDTO = conversions.EntityToDTO(desiredBoat);
             player.getBoats().add(boatDTO);
             return player;
         } else {

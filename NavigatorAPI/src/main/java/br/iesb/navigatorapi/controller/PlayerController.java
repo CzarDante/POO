@@ -1,9 +1,7 @@
 package br.iesb.navigatorapi.controller;
 
-import br.iesb.navigatorapi.dto.BoatDTO;
 import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.BoatEntity;
-import br.iesb.navigatorapi.model.ItemEntity;
 import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.service.AuthService;
 import br.iesb.navigatorapi.service.BoatService;
@@ -36,8 +34,7 @@ public class PlayerController {
             return ResponseEntity.status(400).body("User does not exists");
         }
 
-        UserDTO filteredUser = new UserDTO();
-        filteredUser = conversions.EntityToDTO(authToken);
+        UserDTO filteredUser = conversions.EntityToDTO(authToken);
         return ResponseEntity.ok().body(filteredUser);
     }
 
@@ -51,19 +48,17 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
 
-        BoatEntity sloop = new BoatEntity();
-        sloop = boatService.createBoat(id, token);
 
+        BoatEntity desiredBoat = boatService.createBoat(id, token);
 
-        UserEntity result = new UserEntity();
-        result = playerService.createBoat(sloop, authToken);
+        UserEntity result = playerService.craftBoat(desiredBoat, authToken);
 
 
         if(result == null){
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().body(sloop);
+        return ResponseEntity.ok().body(desiredBoat);
     }
 
 

@@ -26,9 +26,9 @@ public class CopperIslandService {
 
         InventoryEntity avaibleResources = new InventoryEntity();
         ItemEntity newItem = new ItemEntity();
-        newItem = itemService.createItem(ItemEntity.ItemID.wood, (int)Math.random() * (1000 - 500) + 500);
+        newItem = itemService.createItem(ItemEntity.ItemID.wood, random.nextInt(1000 - 500) + 500);
         avaibleResources = inventoryService.addItemToInventory(newItem, avaibleResources);
-        newItem = itemService.createItem(ItemEntity.ItemID.copper, (int)Math.random() * (100 - 25) + 25);
+        newItem = itemService.createItem(ItemEntity.ItemID.copper, random.nextInt(100 - 25) + 25);
         avaibleResources = inventoryService.addItemToInventory(newItem, avaibleResources);
 
 
@@ -36,8 +36,8 @@ public class CopperIslandService {
 
         newCopperIsland.setId(token);
         newCopperIsland.setAvaibleResources(avaibleResources);
-        newCopperIsland.setDistance((int)Math.random() * (300 - 0) + 0);
-        newCopperIsland.setSize((int)Math.random() * (1000 - 250) + 250);
+        newCopperIsland.setDistance(random.nextInt(300 - 0) + 0);
+        newCopperIsland.setSize(random.nextInt(1000 - 250) + 250);
 
         return newCopperIsland;
 

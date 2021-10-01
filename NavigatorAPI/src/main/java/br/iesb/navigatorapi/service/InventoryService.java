@@ -124,19 +124,7 @@ public class InventoryService {
         return inventoryMain;
     }
 
-    public InventoryEntity removeEmptyItems(InventoryEntity inventoryMain) {
-
-        for(ItemEntity itemMain : inventoryMain.getItems()) {
-
-            if(itemMain.getQuantity() == 0) {
-                inventoryMain.getItems().remove(itemMain);
-            }
-        }
-
-        return inventoryMain;
-    }
-
-    public ItemEntity findItem (ItemEntity.ItemID id, InventoryEntity inventoryMain) {
+    public ItemEntity getItemInInventory(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
 
         for(ItemEntity item : inventoryMain.getItems()) {
             if(item.getResource() == id) {

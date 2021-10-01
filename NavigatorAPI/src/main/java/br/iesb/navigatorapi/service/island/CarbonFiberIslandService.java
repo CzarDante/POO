@@ -56,7 +56,7 @@ public class CarbonFiberIslandService {
         carbonFiberFound = itemService.createItem(ItemEntity.ItemID.carbonFiber, resourcesGatheredQuantity);
 
         ItemEntity carbonAtIsland = new ItemEntity();
-        carbonAtIsland = inventoryService.findItem(ItemEntity.ItemID.carbonFiber, islandResources);
+        carbonAtIsland = inventoryService.getItemInInventory(ItemEntity.ItemID.carbonFiber, islandResources);
         if(carbonAtIsland != null) {
 
             // Se pegamos mais itens que os disponíveis na ilha
@@ -79,7 +79,7 @@ public class CarbonFiberIslandService {
         woodFound = itemService.createItem(ItemEntity.ItemID.wood, resourcesGatheredQuantity);
 
         ItemEntity woodAtIsland = new ItemEntity();
-        woodAtIsland = inventoryService.findItem(ItemEntity.ItemID.wood, islandResources);
+        woodAtIsland = inventoryService.getItemInInventory(ItemEntity.ItemID.wood, islandResources);
         if(woodAtIsland != null) {
 
             // Se pegamos mais itens que os disponíveis na ilha
