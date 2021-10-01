@@ -76,4 +76,18 @@ public class BoatService {
         return newBoat;
     }
 
+    public String getRequirementToCraft(BoatEntity boat) {
+
+        String formattedString = boat.getType().toString();
+
+        for(ItemEntity item : boat.getRequiredToCraft().getItems()) {
+            formattedString += " | ";
+            formattedString += item.getResource();
+            formattedString += " x";
+            formattedString += item.getQuantity();
+        }
+
+        return formattedString;
+    }
+
 }

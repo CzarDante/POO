@@ -81,6 +81,7 @@ public class PlayerController {
 
         List<String> items = new ArrayList<>();
 
+        /*
         String sloop = "Type: sloopMax Distance:100 Wood: 500";
         String sailboat = "Type: sailboat  Max Distance:200 Wood: 1000 Iron: 200";
         String brigantine = "Type: brigantine Max Distance:300 Wood: 1500 Copper: 200";
@@ -90,6 +91,12 @@ public class PlayerController {
         items.add(sailboat);
         items.add(brigantine);
         items.add(galleon);
+         */
+
+        for(BoatEntity.boatID id : BoatEntity.boatID.values()) {
+            BoatEntity boat = boatService.createBoat(id, "");
+            items.add(boatService.getRequirementToCraft(boat));
+        }
 
         return ResponseEntity.ok().body(items);
     }
