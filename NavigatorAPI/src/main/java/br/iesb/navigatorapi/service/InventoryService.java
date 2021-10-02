@@ -24,7 +24,7 @@ public class InventoryService {
 
             if(itemMain.getResource() == itemToAdd.getResource()) {
                 itemService.addQuantity(itemToAdd.getQuantity(), itemMain);
-                return false;
+                return true;
             }
 
         }
@@ -36,6 +36,17 @@ public class InventoryService {
         }
 
         inventoryMain.getItems().add(itemToAdd);
+        return true;
+    }
+
+    public boolean addItemToInventory(InventoryEntity inventoryToAdd, InventoryEntity inventoryMain) {
+
+        for(ItemEntity itemToAdd : inventoryToAdd.getItems()) {
+            if(!addItemToInventory(itemToAdd, inventoryMain)) {
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -51,11 +62,6 @@ public class InventoryService {
                     //Garantir que dá para subtrair
                     if (itemService.isEnoughQuantity(itemSubtrahend, itemMain)) {
                         itemService.subtractQuantity(itemSubtrahend.getQuantity(), itemMain);
-
-                        //Se a subtração deixar o player com 0 qtd de itens, remover o item do inventário
-                        if (itemMain.getQuantity() == 0)
-                            removeItem(itemMain.getResource(), inventoryMain);
-
                         return true;
 
                     // Se o player não tem a quantidade suficiente de itens para poder subtrair
@@ -83,21 +89,7 @@ public class InventoryService {
         } else {
 
             for(ItemEntity itemSubtrahend : inventorySubtrahend.getItems()) {
-                //Procurando o item
-                for(ItemEntity itemMain : inventoryMain.getItems()) {
-                    if(itemMain.getResource() == itemSubtrahend.getResource()) {
-
-                        //Garantir que dá para subtrair
-                        if(itemService.isEnoughQuantity(itemSubtrahend, itemMain)) {
-
-                            itemService.subtractQuantity(itemSubtrahend.getQuantity(), itemMain);
-                            if(itemMain.getQuantity() == 0)
-                                removeItem(itemMain.getResource(), inventoryMain);
-
-                            break;
-                        }
-                    }
-                }
+                subtractFromInventory(itemSubtrahend, inventoryMain);
             }
         }
 
@@ -121,6 +113,18 @@ public class InventoryService {
         }
 
         return false;
+    }
+
+    public InventoryEntity copyInventory(InventoryEntity inventoryToCopy) {
+        InventoryEntity newInventory = createInventory(inventoryToCopy.getSize());
+
+        ItemEntity itemCopy;
+        for(ItemEntity item : inventoryToCopy.getItems()) {
+            itemCopy = itemService.createItem(item.getResource(), item.getQuantity());
+            addItemToInventory(itemCopy, newInventory);
+        }
+
+        return newInventory;
     }
 
     public ItemEntity getItemInInventory(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
@@ -164,6 +168,28 @@ public class InventoryService {
                 return true;
         }
         return false;
+    }
+
+    public boolean isInventoriesEqual(InventoryEntity inventoryA, InventoryEntity inventoryB) {
+        boolean validated = false;
+        for(ItemEntity itemA : inventoryA.getItems()) {
+
+            for(ItemEntity itemB : inventoryB.getItems()) {
+                //Ver se o recurso existe nos dois inventários
+                if(itemA.getResource() == itemB.getResource()) {
+                    //Ver se os dois itens estão na mesma quantidade
+                    if(itemA.getQuantity() == itemB.getQuantity()) {
+                        validated = true;
+                    }
+                    break;
+                }
+            }
+            if(!validated)
+                return false;
+
+        }
+
+        return true;
     }
 
 }

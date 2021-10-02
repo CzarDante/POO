@@ -3,13 +3,14 @@ package br.iesb.navigatorapi.service.island;
 import br.iesb.navigatorapi.model.InventoryEntity;
 import br.iesb.navigatorapi.model.ItemEntity;
 import br.iesb.navigatorapi.model.island.CarbonFiberIslandEntity;
+import br.iesb.navigatorapi.model.island.CopperIslandEntity;
+import br.iesb.navigatorapi.repository.IslandsRepository;
 import br.iesb.navigatorapi.service.InventoryService;
 import br.iesb.navigatorapi.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class CarbonFiberIslandService {
@@ -18,13 +19,15 @@ public class CarbonFiberIslandService {
     InventoryService inventoryService;
     @Autowired
     ItemService itemService;
+    @Autowired
+    IslandsRepository islandsRepository;
 
-    public CarbonFiberIslandEntity createCarbonFiberIslandService () {
+    public CarbonFiberIslandEntity createCarbonFiberIsland() {
 
         Random random = new Random();
         CarbonFiberIslandEntity newCarbonFiberIsland = new CarbonFiberIslandEntity();
 
-        InventoryEntity avaibleResources = new InventoryEntity();
+        InventoryEntity avaibleResources = inventoryService.createInventory(2);
         ItemEntity newItem;
         newItem = itemService.createItem(ItemEntity.ItemID.wood, random.nextInt(500 - 100) + 100);
         inventoryService.addItemToInventory(newItem, avaibleResources);
@@ -43,66 +46,50 @@ public class CarbonFiberIslandService {
 
     }
 
-    /*
-    public InventoryEntity gatherResources (int timeSpent, CarbonFiberIslandEntity island) {
+    public CarbonFiberIslandEntity getCarbonFiberIsland(String idToSearch) {
 
-        InventoryEntity gatheredResources = new InventoryEntity();
-
-        InventoryEntity islandResources = new InventoryEntity();
-        islandResources = island.getAvaibleResources();
-
-        int resourcesGatheredQuantity = timeSpent * 2;
-
-        ItemEntity carbonFiberFound = new ItemEntity();
-        carbonFiberFound = itemService.createItem(ItemEntity.ItemID.carbonFiber, resourcesGatheredQuantity);
-
-        ItemEntity carbonAtIsland = new ItemEntity();
-        carbonAtIsland = inventoryService.getItemInInventory(ItemEntity.ItemID.carbonFiber, islandResources);
-        if(carbonAtIsland != null) {
-
-            // Se pegamos mais itens que os disponíveis na ilha
-            if(carbonFiberFound.getQuantity() >= carbonAtIsland.getQuantity()) {
-
-                carbonFiberFound.setQuantity(carbonAtIsland.getQuantity());
-                islandResources = inventoryService.removeItem(ItemEntity.ItemID.carbonFiber, islandResources);
-
-            } else {
-
-                islandResources = inventoryService.subtractFromInventory(carbonFiberFound, islandResources);
-
-            }
-
-            inventoryService.addItemToInventory(carbonFiberFound, gatheredResources);
-
+        List<CarbonFiberIslandEntity> carbonFiberIslandEntities = new ArrayList<>();
+        carbonFiberIslandEntities = islandsRepository.getCarbonFiberIslandsInMemory();
+        for(CarbonFiberIslandEntity island : carbonFiberIslandEntities) {
+            if(idToSearch == island.getId())
+                return island;
         }
 
-        ItemEntity woodFound = new ItemEntity();
-        woodFound = itemService.createItem(ItemEntity.ItemID.wood, resourcesGatheredQuantity);
+        return null;
+    }
 
-        ItemEntity woodAtIsland = new ItemEntity();
-        woodAtIsland = inventoryService.getItemInInventory(ItemEntity.ItemID.wood, islandResources);
-        if(woodAtIsland != null) {
+    public InventoryEntity gatherCarbonFiberResources (int timeSpent, CarbonFiberIslandEntity island) {
+
+        int resourcesGatheredQuantity = timeSpent * 2;
+        InventoryEntity gatheredResources = inventoryService.createInventory(2);
+
+        for(ItemEntity itemAtIsland : island.getAvaibleResources().getItems()) {
+
+            // Esse if é totalmente desnecessário, só não consigo remover itens usando esse for loop sem quebrar
+            // o programa, e ainda não tô conseguindo usar o iterator para isso, então por enquanto não tô removendo
+            // nenhum item.
+            if(itemAtIsland.getQuantity() <= 0)
+                break;
+
+            ItemEntity itemGathered;
+            itemGathered = itemService.createItem(itemAtIsland.getResource(), resourcesGatheredQuantity);
 
             // Se pegamos mais itens que os disponíveis na ilha
-            if(carbonFiberFound.getQuantity() >= woodAtIsland.getQuantity()) {
+            if(itemGathered.getQuantity() >= itemAtIsland.getQuantity()) {
+                itemGathered.setQuantity(itemAtIsland.getQuantity());
 
-                carbonFiberFound.setQuantity(woodAtIsland.getQuantity());
-                islandResources = inventoryService.removeItem(ItemEntity.ItemID.wood, islandResources);
+                // Remoção que não dá para fazer sem quebrar o código dentro do loop
+                //inventoryService.removeItem(itemAtIsland.getResource(), island.getAvaibleResources());
 
-
-
+                // Subtração que seria desnecessária se fosse possível remover item sem quebrar
+                inventoryService.subtractFromInventory(itemGathered, island.getAvaibleResources());
             } else {
-
-                islandResources = inventoryService.subtractFromInventory(carbonFiberFound, islandResources);
-
+                inventoryService.subtractFromInventory(itemGathered, island.getAvaibleResources());
             }
-
-            inventoryService.addItemToInventory(carbonFiberFound, gatheredResources);
-
+            inventoryService.addItemToInventory(itemGathered, gatheredResources);
         }
 
         return gatheredResources;
     }
-     */
 
 }

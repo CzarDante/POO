@@ -11,6 +11,7 @@ public class UserEntity {
     private String token;
     private InventoryEntity inventory = new InventoryEntity();
     private ArrayList<BoatDTO> boats = new ArrayList<BoatDTO>();
+
     private String currentIslandID;
     private ArrayList<String> closeIslandsID = new ArrayList<String>();
 
