@@ -6,7 +6,6 @@ import br.iesb.navigatorapi.model.InventoryEntity;
 import br.iesb.navigatorapi.model.ItemEntity;
 import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.service.island.IslandService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
