@@ -1,12 +1,18 @@
 package br.iesb.navigatorapi.service.island;
 
+import br.iesb.navigatorapi.model.InventoryEntity;
+import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.model.island.CarbonFiberIslandEntity;
 import br.iesb.navigatorapi.model.island.CopperIslandEntity;
 import br.iesb.navigatorapi.model.island.IronIslandEntity;
 import br.iesb.navigatorapi.model.island.SteelIslandEntity;
+import br.iesb.navigatorapi.repository.IslandsRepository;
+import br.iesb.navigatorapi.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -20,34 +26,119 @@ public class IslandService {
     SteelIslandService steelIslandService;
     @Autowired
     IronIslandService ironIslandService;
-
+    @Autowired
+    IslandsRepository islandsRepository;
+    @Autowired
+    InventoryService inventoryService;
 
     Random random = new Random();
 
-    private String[] islandTypes = {"Carbon", "Copper", "Iron", "Steel"};
+    public enum islandTypes {
+        carbonFiber,
+        copper,
+        iron,
+        steel;
+    }
 
     public String createIsland() {
-        switch (islandTypes[random.nextInt(4)]) {
-            case "Carbon":
-                CarbonFiberIslandEntity carbonFiberIslandEntity = new CarbonFiberIslandEntity();
-                carbonFiberIslandEntity = carbonFiberIslandService.createCarbonFiberIslandService();
+        switch (islandTypes.values()[random.nextInt(islandTypes.values().length)]) {
+            case carbonFiber:
+                CarbonFiberIslandEntity carbonFiberIslandEntity;
+                carbonFiberIslandEntity = carbonFiberIslandService.createCarbonFiberIsland();
+                islandsRepository.setCarbonFiberIslandsInMemory(carbonFiberIslandEntity);
                 return carbonFiberIslandEntity.getId();
-            case "Copper":
-                CopperIslandEntity copperIslandEntity = new CopperIslandEntity();
-                copperIslandEntity = copperIslandService.createCopperIslandService();
+            case copper:
+                CopperIslandEntity copperIslandEntity;
+                copperIslandEntity = copperIslandService.createCopperIsland();
+                islandsRepository.setCopperIslandsInMemory(copperIslandEntity);
                 return copperIslandEntity.getId();
-            case "Iron":
-                IronIslandEntity ironIslandEntity = new IronIslandEntity();
-                ironIslandEntity = ironIslandService.createIronIslandService();
+            case iron:
+                IronIslandEntity ironIslandEntity;
+                ironIslandEntity = ironIslandService.createIronIsland();
+                islandsRepository.setIronIslandsInMemory(ironIslandEntity);
                 return ironIslandEntity.getId();
-            case "Steel":
-                SteelIslandEntity steelIslandEntity = new SteelIslandEntity();
-                steelIslandEntity = steelIslandService.createSteelIslandService();
+            case steel:
+                SteelIslandEntity steelIslandEntity;
+                steelIslandEntity = steelIslandService.createSteelIsland();
+                islandsRepository.setSteelIslandsInMemory(steelIslandEntity);
                 return steelIslandEntity.getId();
         }
 
         return null;
     }
 
+    public boolean gatherResource(UserEntity player) {
+        islandTypes currentIslandType = getIslandType(player.getCurrentIslandID());
+        if(currentIslandType == null) {
+            return false;
+        }
+
+
+        String currentIsland = player.getCurrentIslandID();
+        InventoryEntity itemsGathered = inventoryService.createInventory(10);
+        switch(currentIslandType) {
+            case iron:
+                IronIslandEntity ironIslandEntity = ironIslandService.getIronIsland(currentIsland);
+                itemsGathered = ironIslandService.gatherIronIslandResources(1000,ironIslandEntity);
+                break;
+            case steel:
+                SteelIslandEntity steelIslandEntity = steelIslandService.getIronIsland(currentIsland);
+                itemsGathered = steelIslandService.gatherSteelIslandResources(1000, steelIslandEntity);
+                break;
+            case copper:
+                CopperIslandEntity copperIslandEntity = copperIslandService.getCopperIsland(currentIsland);
+                itemsGathered = copperIslandService.gatherCopperIslandResources(1000, copperIslandEntity);
+                break;
+            case carbonFiber:
+                CarbonFiberIslandEntity carbonFiberIslandEntity = carbonFiberIslandService.getCarbonFiberIsland(currentIsland);
+                itemsGathered = carbonFiberIslandService.gatherCarbonFiberResources(1000, carbonFiberIslandEntity);
+                break;
+            default:
+                return false;
+        }
+
+        // Vendo se ocorreu alguma mudança no inventário para dizer se coletou algo ou não
+        // Meio preguiçoso fazer assim eu acho, se alguém tiver uma ideia melhor!
+        InventoryEntity inventoryBeforeChanges = inventoryService.copyInventory(player.getInventory());
+        inventoryService.addItemToInventory(itemsGathered, player.getInventory());
+
+        if(inventoryService.isInventoriesEqual(inventoryBeforeChanges, player.getInventory()))
+            return false;
+
+        return true;
+    }
+
+    public islandTypes getIslandType(String idToSearch) {
+
+        List<CarbonFiberIslandEntity> carbonFiberIslandEntities = new ArrayList<>();
+        carbonFiberIslandEntities = islandsRepository.getCarbonFiberIslandsInMemory();
+        for(CarbonFiberIslandEntity island : carbonFiberIslandEntities) {
+            if(idToSearch == island.getId())
+                return islandTypes.carbonFiber;
+        }
+
+        List<CopperIslandEntity> copperIslandEntities = new ArrayList<>();
+        copperIslandEntities = islandsRepository.getCopperIslandsInMemory();
+        for(CopperIslandEntity island : copperIslandEntities) {
+            if(idToSearch == island.getId())
+                return islandTypes.copper;
+        }
+
+        List<IronIslandEntity> ironIslandEntities = new ArrayList<>();
+        ironIslandEntities = islandsRepository.getIronIslandsInMemory();
+        for(IronIslandEntity island : ironIslandEntities) {
+            if(idToSearch == island.getId())
+                return islandTypes.iron;
+        }
+
+        List<SteelIslandEntity> steelIslandEntities = new ArrayList<>();
+        steelIslandEntities = islandsRepository.getSteelIslandsInMemory();
+        for(SteelIslandEntity island : steelIslandEntities) {
+            if(idToSearch == island.getId())
+                return islandTypes.steel;
+        }
+
+        return null;
+    }
 
 }

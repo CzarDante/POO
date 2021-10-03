@@ -17,14 +17,14 @@ public class InventoryService {
 
     }
 
-    public InventoryEntity addItemToInventory(ItemEntity itemToAdd, InventoryEntity inventoryMain) {
+    public boolean addItemToInventory(ItemEntity itemToAdd, InventoryEntity inventoryMain) {
 
         // Procurando o item
         for(ItemEntity itemMain : inventoryMain.getItems()) {
 
             if(itemMain.getResource() == itemToAdd.getResource()) {
-                itemMain = itemService.addQuantity(itemToAdd.getQuantity(), itemMain);
-                return inventoryMain;
+                itemService.addQuantity(itemToAdd.getQuantity(), itemMain);
+                return true;
             }
 
         }
@@ -32,14 +32,25 @@ public class InventoryService {
         //Se o item não existe, verificar se a gente pode colocar ele sem superar o tamanho do inventário
         if(inventoryMain.getItems().size() + 1 > inventoryMain.getSize()) {
             //TODO: Não foi possível adicionar o item pois supera o tamanho do inventário
-            return inventoryMain;
+            return false;
         }
 
         inventoryMain.getItems().add(itemToAdd);
-        return inventoryMain;
+        return true;
     }
 
-    public InventoryEntity subtractFromInventory(ItemEntity itemSubtrahend, InventoryEntity inventoryMain) {
+    public boolean addItemToInventory(InventoryEntity inventoryToAdd, InventoryEntity inventoryMain) {
+
+        for(ItemEntity itemToAdd : inventoryToAdd.getItems()) {
+            if(!addItemToInventory(itemToAdd, inventoryMain)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean subtractFromInventory(ItemEntity itemSubtrahend, InventoryEntity inventoryMain) {
 
         //Vendo se o item está contido no inventário
         if(isItemContained(itemSubtrahend.getResource(), inventoryMain)) {
@@ -50,18 +61,13 @@ public class InventoryService {
 
                     //Garantir que dá para subtrair
                     if (itemService.isEnoughQuantity(itemSubtrahend, itemMain)) {
-                        itemMain = itemService.subtractQuantity(itemSubtrahend.getQuantity(), itemMain);
-
-                        //Se a subtração deixar o player com 0 qtd de itens, remover o item do inventário
-                        if (itemMain.getQuantity() == 0)
-                            inventoryMain = removeItem(itemMain.getResource(), inventoryMain);
-
-                        return inventoryMain;
+                        itemService.subtractQuantity(itemSubtrahend.getQuantity(), itemMain);
+                        return true;
 
                     // Se o player não tem a quantidade suficiente de itens para poder subtrair
                     } else {
 
-                        return inventoryMain;
+                        return false;
 
                     }
 
@@ -71,41 +77,26 @@ public class InventoryService {
         }
 
         // Se chegou aqui o item não está contido no inventário.
-        return inventoryMain;
+        return false;
 
     }
 
-    public InventoryEntity subtractFromInventory(InventoryEntity inventorySubtrahend, InventoryEntity inventoryMain) {
+    public boolean subtractFromInventory(InventoryEntity inventorySubtrahend, InventoryEntity inventoryMain) {
 
         //Só entra na subtração se o player contem todos os itens necessários
-        if(isItemsContained(inventorySubtrahend, inventoryMain)) {
+        if(!isItemsContained(inventorySubtrahend, inventoryMain)) {
+            return false;
+        } else {
 
             for(ItemEntity itemSubtrahend : inventorySubtrahend.getItems()) {
-
-                //Procurando o item
-                for(ItemEntity itemMain : inventoryMain.getItems()) {
-                    if(itemMain.getResource() == itemSubtrahend.getResource()) {
-
-                        //Garantir que dá para subtrair
-                        if(itemService.isEnoughQuantity(itemSubtrahend, itemMain)) {
-
-                            itemMain = itemService.subtractQuantity(itemSubtrahend.getQuantity(), itemMain);
-                            if(itemMain.getQuantity() == 0)
-                                inventoryMain = removeItem(itemMain.getResource(), inventoryMain);
-
-                            break;
-                        }
-                    }
-
-                }
+                subtractFromInventory(itemSubtrahend, inventoryMain);
             }
         }
 
-
-        return inventoryMain;
+        return true;
     }
 
-    public InventoryEntity removeItem(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
+    public boolean removeItem(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
 
         //Só entra na remoção se o item está contido no inventário
         if(isItemContained(id, inventoryMain)) {
@@ -114,29 +105,29 @@ public class InventoryService {
 
                 if(itemMain.getResource() == id) {
                     inventoryMain.getItems().remove(itemMain);
-                    return inventoryMain;
+                    return true;
                 }
 
             }
 
         }
 
-        return inventoryMain;
+        return false;
     }
 
-    public InventoryEntity removeEmptyItems(InventoryEntity inventoryMain) {
+    public InventoryEntity copyInventory(InventoryEntity inventoryToCopy) {
+        InventoryEntity newInventory = createInventory(inventoryToCopy.getSize());
 
-        for(ItemEntity itemMain : inventoryMain.getItems()) {
-
-            if(itemMain.getQuantity() == 0) {
-                inventoryMain.getItems().remove(itemMain);
-            }
+        ItemEntity itemCopy;
+        for(ItemEntity item : inventoryToCopy.getItems()) {
+            itemCopy = itemService.createItem(item.getResource(), item.getQuantity());
+            addItemToInventory(itemCopy, newInventory);
         }
 
-        return inventoryMain;
+        return newInventory;
     }
 
-    public ItemEntity findItem (ItemEntity.ItemID id, InventoryEntity inventoryMain) {
+    public ItemEntity getItemInInventory(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
 
         for(ItemEntity item : inventoryMain.getItems()) {
             if(item.getResource() == id) {
@@ -177,6 +168,28 @@ public class InventoryService {
                 return true;
         }
         return false;
+    }
+
+    public boolean isInventoriesEqual(InventoryEntity inventoryA, InventoryEntity inventoryB) {
+        boolean validated = false;
+        for(ItemEntity itemA : inventoryA.getItems()) {
+
+            for(ItemEntity itemB : inventoryB.getItems()) {
+                //Ver se o recurso existe nos dois inventários
+                if(itemA.getResource() == itemB.getResource()) {
+                    //Ver se os dois itens estão na mesma quantidade
+                    if(itemA.getQuantity() == itemB.getQuantity()) {
+                        validated = true;
+                    }
+                    break;
+                }
+            }
+            if(!validated)
+                return false;
+
+        }
+
+        return true;
     }
 
 }

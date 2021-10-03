@@ -42,17 +42,6 @@ public class BoatDTO {
         this.maxDistance = maxDistance;
     }
 
-    /*
-    public int getMaxLoad() {
-        return maxLoad;
-    }
-
-    public void setMaxLoad(int maxLoad) {
-        this.maxLoad = maxLoad;
-    }
-
-     */
-
     public int getTotalDistanceTravaled() {
         return totalDistanceTravaled;
     }

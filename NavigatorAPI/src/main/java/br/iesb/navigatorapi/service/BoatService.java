@@ -20,48 +20,48 @@ public class BoatService {
         InventoryEntity cargo = new InventoryEntity();
 
         //Definindo os itens necessários para criar o barco
-        ItemEntity requiredItem = new ItemEntity();
+        ItemEntity requiredItem;
         switch(type) {
             case sloop:
-                requiredToCraft.setSize(2);
+                requiredToCraft = inventoryService.createInventory(2);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 500);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(5);
                 newBoat.setMaxDistance(100);
 
                 break;
             case sailboat:
-                requiredToCraft.setSize(2);
+                requiredToCraft = inventoryService.createInventory(2);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 1000);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.iron, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(10);
                 newBoat.setMaxDistance(200);
                 break;
             case brigantine:
-                requiredToCraft.setSize(2);
+                requiredToCraft = inventoryService.createInventory(2);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 1500);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.copper, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 cargo.setSize(15);
                 newBoat.setMaxDistance(300);
                 break;
             case galleon:
-                requiredToCraft.setSize(2);
+                requiredToCraft = inventoryService.createInventory(5);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.wood, 2000);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.steel, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.iron, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.copper, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 requiredItem = itemService.createItem(ItemEntity.ItemID.carbonFiber, 200);
-                requiredToCraft = inventoryService.addItemToInventory(requiredItem, requiredToCraft);
+                inventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(20);
                 newBoat.setMaxDistance(400);
@@ -74,6 +74,20 @@ public class BoatService {
         newBoat.setId(id);
 
         return newBoat;
+    }
+
+    public String getRequirementToCraft(BoatEntity boat) {
+
+        String formattedString = boat.getType().toString();
+
+        for(ItemEntity item : boat.getRequiredToCraft().getItems()) {
+            formattedString += " | ";
+            formattedString += item.getResource();
+            formattedString += " x";
+            formattedString += item.getQuantity();
+        }
+
+        return formattedString;
     }
 
 }

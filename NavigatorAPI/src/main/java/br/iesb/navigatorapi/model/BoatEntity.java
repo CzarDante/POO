@@ -7,7 +7,6 @@ public class BoatEntity {
     private int size;
     private int maxDistance;
     private int totalDistanceTravaled;
-    //private int maxLoad;
     private InventoryEntity cargo = new InventoryEntity();
     private InventoryEntity requiredToCraft = new InventoryEntity();
 
@@ -43,17 +42,6 @@ public class BoatEntity {
     public void setMaxDistance(int maxDistance) {
         this.maxDistance = maxDistance;
     }
-
-    /*
-    public int getMaxLoad() {
-        return maxLoad;
-    }
-
-    public void setMaxLoad(int maxLoad) {
-        this.maxLoad = maxLoad;
-    }
-
-     */
 
     public int getTotalDistanceTravaled() {
         return totalDistanceTravaled;
