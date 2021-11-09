@@ -11,6 +11,7 @@ public class UserEntity {
     private String token;
     private InventoryEntity inventory = new InventoryEntity();
     private ArrayList<BoatDTO> boats = new ArrayList<BoatDTO>();
+    private long lootCooldown;
 
     private String currentIslandID;
     private ArrayList<String> closeIslandsID = new ArrayList<String>();
@@ -61,5 +62,13 @@ public class UserEntity {
 
     public void setCloseIslandsID(String closeIslandsID) {
         this.closeIslandsID.add(closeIslandsID);
+    }
+
+    public long getLootCooldown() {
+        return lootCooldown;
+    }
+
+    public void setLootCooldown(int tempo) {
+        this.lootCooldown = System.currentTimeMillis() + tempo * 60000;
     }
 }

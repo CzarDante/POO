@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 @Service
 public class IslandService {
@@ -67,31 +68,39 @@ public class IslandService {
         return null;
     }
 
-    public boolean gatherResource(UserEntity player) {
+    public boolean gatherResource(UserEntity player, Integer time) {
+
+
         islandTypes currentIslandType = getIslandType(player.getCurrentIslandID());
         if(currentIslandType == null) {
             return false;
         }
 
+        if(player.getLootCooldown() - System.currentTimeMillis() > 0){
+            return false;
+        }else{
+            player.setLootCooldown(time);
+        }
 
         String currentIsland = player.getCurrentIslandID();
         InventoryEntity itemsGathered = inventoryService.createInventory(10);
+
         switch(currentIslandType) {
             case iron:
                 IronIslandEntity ironIslandEntity = ironIslandService.getIronIsland(currentIsland);
-                itemsGathered = ironIslandService.gatherIronIslandResources(1000,ironIslandEntity);
+                itemsGathered = ironIslandService.gatherIronIslandResources(time,ironIslandEntity);
                 break;
             case steel:
                 SteelIslandEntity steelIslandEntity = steelIslandService.getIronIsland(currentIsland);
-                itemsGathered = steelIslandService.gatherSteelIslandResources(1000, steelIslandEntity);
+                itemsGathered = steelIslandService.gatherSteelIslandResources(time, steelIslandEntity);
                 break;
             case copper:
                 CopperIslandEntity copperIslandEntity = copperIslandService.getCopperIsland(currentIsland);
-                itemsGathered = copperIslandService.gatherCopperIslandResources(1000, copperIslandEntity);
+                itemsGathered = copperIslandService.gatherCopperIslandResources(time, copperIslandEntity);
                 break;
             case carbonFiber:
                 CarbonFiberIslandEntity carbonFiberIslandEntity = carbonFiberIslandService.getCarbonFiberIsland(currentIsland);
-                itemsGathered = carbonFiberIslandService.gatherCarbonFiberResources(1000, carbonFiberIslandEntity);
+                itemsGathered = carbonFiberIslandService.gatherCarbonFiberResources(time, carbonFiberIslandEntity);
                 break;
             default:
                 return false;
