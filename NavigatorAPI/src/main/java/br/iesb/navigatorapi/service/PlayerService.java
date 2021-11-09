@@ -41,29 +41,9 @@ public class PlayerService {
         //Criando itens hardcoded para testar o resto das coisas...
         ItemEntity newItem;
         for(ItemEntity.ItemID itemID : ItemEntity.ItemID.values()) {
-            newItem = itemService.createItem(itemID, 5000);
+            newItem = itemService.createItem(itemID, 100);
             inventoryService.addItemToInventory(newItem, newInventory);
         }
-
-        /*
-        newItem = itemService.createItem(ItemEntity.ItemID.wood, 5000);
-        inventoryService.addItemToInventory(newItem, newInventory);
-
-        newItem = itemService.createItem(ItemEntity.ItemID.iron, 5000);
-        inventoryService.addItemToInventory(newItem, newInventory);
-
-        newItem = itemService.createItem(ItemEntity.ItemID.steel, 5000);
-        inventoryService.addItemToInventory(newItem, newInventory);
-
-        newItem = itemService.createItem(ItemEntity.ItemID.carbonFiber, 5000);
-        inventoryService.addItemToInventory(newItem, newInventory);
-
-        newItem = itemService.createItem(ItemEntity.ItemID.copper, 5000);
-        inventoryService.addItemToInventory(newItem, newInventory);
-
-        newItem = itemService.createItem(ItemEntity.ItemID.money, 5000);
-        inventoryService.addItemToInventory(newItem, newInventory);
-         */
 
         newPlayer.setInventory(newInventory);
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 @RestController
 public class PlayerController {
@@ -38,7 +39,6 @@ public class PlayerController {
         if(authToken == null){
             return ResponseEntity.status(400).body("User does not exists");
         }
-
         UserDTO filteredUser = conversions.EntityToDTO(authToken);
         return ResponseEntity.ok().body(filteredUser);
     }
@@ -62,7 +62,7 @@ public class PlayerController {
     }
 
     @PostMapping("/gather-resource")
-    public ResponseEntity gatherResource(@RequestHeader("Token") String token) {
+    public ResponseEntity gatherResource(@RequestHeader("Token") String token, @RequestHeader("Time") Integer time) {
 
         UserEntity authToken = authService.findUserByToken(token);
 
@@ -70,7 +70,7 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
 
-        if(!islandService.gatherResource(authToken)) {
+        if(!islandService.gatherResource(authToken,time)) {
             return ResponseEntity.notFound().build();
         }
 
