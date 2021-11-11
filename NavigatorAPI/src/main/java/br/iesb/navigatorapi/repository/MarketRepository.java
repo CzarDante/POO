@@ -1,6 +1,6 @@
 package br.iesb.navigatorapi.repository;
 
-import br.iesb.navigatorapi.model.MerchandiseEntity;
+import br.iesb.navigatorapi.model.MarketEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
@@ -10,17 +10,17 @@ import java.util.List;
 @Repository
 @Scope("singleton")
 public class MarketRepository {
-    private List<MerchandiseEntity> marketItems = new ArrayList<>();
+    private List<MarketEntity> marketItems = new ArrayList<>();
 
-    public List<MerchandiseEntity> getMarketItems() {
+    public List<MarketEntity> getMarketItems() {
         return marketItems;
     }
 
-    public void setMarketItems(MerchandiseEntity marketItem) {
+    public void setMarketItems(MarketEntity marketItem) {
         this.marketItems.add(marketItem);
     }
 
-    public void removeMarketItems(MerchandiseEntity marketItem) {
+    public void removeMarketItems(MarketEntity marketItem) {
         this.marketItems.remove(marketItem);
     }
 }

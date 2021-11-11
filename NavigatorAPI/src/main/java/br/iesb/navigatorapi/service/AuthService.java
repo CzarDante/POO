@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Scope("singleton")
@@ -37,17 +39,21 @@ public class AuthService {
 
         if (username.trim().equals("")) {
             // Erro de nome vazio
-            // return 1;
+            return null;
         }
 
         if (username.trim().split(" ").length != 1) {
             // Erro de nome com espaço
-            // return 2;
+            return null;
         }
 
-        if (username.contains("@")) {
+        Pattern p = Pattern.compile("[^a-z0-9]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(username);
+        boolean usernameHasSpecialCharacters = m.find();
+
+        if(usernameHasSpecialCharacters) {
             // Erro de nome com caractere especial
-            // return 3;
+            return null;
         }
 
         String token = UUID.randomUUID().toString();

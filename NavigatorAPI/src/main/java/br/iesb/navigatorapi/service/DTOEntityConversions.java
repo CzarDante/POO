@@ -1,8 +1,10 @@
 package br.iesb.navigatorapi.service;
 
 import br.iesb.navigatorapi.dto.BoatDTO;
+import br.iesb.navigatorapi.dto.MarketDTO;
 import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.BoatEntity;
+import br.iesb.navigatorapi.model.MarketEntity;
 import br.iesb.navigatorapi.model.UserEntity;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,16 @@ public class DTOEntityConversions {
         boatDTO.setTotalDistanceTravaled(boatEntity.getTotalDistanceTravaled());
 
         return boatDTO;
+    }
+
+    public MarketDTO EntityToDTO(MarketEntity marketEntity) {
+        MarketDTO marketDTO = new MarketDTO();
+
+        marketDTO.setOfferedItem(marketEntity.getOfferedItem());
+        marketDTO.setPricePerItem(marketEntity.getPricePerItem());
+        marketDTO.setTradeID(marketEntity.getTradeID());
+
+        return marketDTO;
     }
 
 

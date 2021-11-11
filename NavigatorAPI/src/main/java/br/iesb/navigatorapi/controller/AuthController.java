@@ -20,6 +20,10 @@ public class AuthController {
     public ResponseEntity<String> signup(@RequestBody UserEntity user) {
         String userToken = service.signup(user.getName());
 
+        if(userToken == null)
+            return ResponseEntity.notFound().build();
+
+
         return ResponseEntity.ok().body(userToken);
     }
 
