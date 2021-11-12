@@ -1,7 +1,7 @@
 package br.iesb.navigatorapi.dto;
 
 import br.iesb.navigatorapi.model.BoatEntity;
-import br.iesb.navigatorapi.model.InventoryEntity;
+import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 
 public class BoatDTO {
     private String id;

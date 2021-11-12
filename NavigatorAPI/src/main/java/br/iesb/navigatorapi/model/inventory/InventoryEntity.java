@@ -1,4 +1,6 @@
-package br.iesb.navigatorapi.model;
+package br.iesb.navigatorapi.model.inventory;
+
+import br.iesb.navigatorapi.model.inventory.ItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;

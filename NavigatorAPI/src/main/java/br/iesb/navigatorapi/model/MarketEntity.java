@@ -1,5 +1,7 @@
 package br.iesb.navigatorapi.model;
 
+import br.iesb.navigatorapi.model.inventory.ItemEntity;
+
 public class MarketEntity {
     private String sellerID;
     private String tradeID;

@@ -1,17 +1,16 @@
 package br.iesb.navigatorapi.controller;
 
 import br.iesb.navigatorapi.dto.MarketDTO;
-import br.iesb.navigatorapi.model.ItemEntity;
+import br.iesb.navigatorapi.model.inventory.ItemEntity;
 import br.iesb.navigatorapi.model.MarketEntity;
 import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.service.AuthService;
 import br.iesb.navigatorapi.service.DTOEntityConversions;
-import br.iesb.navigatorapi.service.Market.MarketService;
-import br.iesb.navigatorapi.service.Market.TradingService;
+import br.iesb.navigatorapi.service.market.MarketService;
+import br.iesb.navigatorapi.service.market.TradingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.yaml.snakeyaml.error.Mark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +76,14 @@ public class MarketController {
             return ResponseEntity.notFound().build();
         }
 
-        boolean isValidTrade = tradingService.buyItem(quantity, tradeID, buyer);
-        if(!isValidTrade) {
-            return ResponseEntity.status(400).body("User can't buy the item.");
+        int errorHandler = tradingService.buyItem(quantity, tradeID, buyer);
+        switch(errorHandler) {
+            case 1:
+                return ResponseEntity.status(400).body("There isn't any offers in the market with the informed tradeID");
+            case 2:
+                return ResponseEntity.status(400).body("It seems the seller for that trade doesn't exist anymore. The offer has been removed.");
+            case 3:
+                return ResponseEntity.status(400).body("You don't have enough items to finish the trade.");
         }
 
         return ResponseEntity.ok().body("Successful trade!");

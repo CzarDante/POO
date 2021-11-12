@@ -1,14 +1,33 @@
 package br.iesb.navigatorapi.model.island;
 
-import br.iesb.navigatorapi.model.InventoryEntity;
+import br.iesb.navigatorapi.model.inventory.InventoryEntity;
+import java.util.Random;
 
-public class IslandEntity {
+public abstract class IslandEntity {
 
-    private String id;
-    private int size;
-    private int distance;
+    protected String id;
+    protected IslandType islandType;
+    protected int size;
+    protected int distance;
 
-    private InventoryEntity avaibleResources = new InventoryEntity();
+    protected InventoryEntity avaibleResources;
+
+    public enum IslandType {
+        carbonFiber,
+        copper,
+        iron,
+        steel;
+    }
+
+    Random random = new Random();
+
+    public IslandType getIslandType() {
+        return islandType;
+    }
+
+    public void setIslandType(IslandType islandType) {
+        this.islandType = islandType;
+    }
 
     public String getId() {
         return id;
@@ -35,7 +54,7 @@ public class IslandEntity {
     }
 
     public InventoryEntity getAvaibleResources() {
-        return avaibleResources;
+        return this.avaibleResources;
     }
 
     public void setAvaibleResources(InventoryEntity avaibleResources) {

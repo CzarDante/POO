@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class DTOEntityConversions {
 
-    public UserDTO EntityToDTO(UserEntity userEntity) {
+    public static UserDTO EntityToDTO(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setName(userEntity.getName());
         userDTO.setInventory(userEntity.getInventory());
         userDTO.setBoats(userEntity.getBoats());
-        userDTO.setCurrentIslandID(userEntity.getCurrentIslandID());
-        userDTO.setCloseIslandsID(userEntity.getCloseIslandsID());
+        userDTO.setCurrentIsland(userEntity.getCurrentIsland());
+        userDTO.setCloseIslands(userEntity.getCloseIslands());
 
         return userDTO;
     }
 
-    public BoatDTO EntityToDTO(BoatEntity boatEntity) {
+    public static BoatDTO EntityToDTO(BoatEntity boatEntity) {
         BoatDTO boatDTO = new BoatDTO();
 
         boatDTO.setCargo(boatEntity.getCargo());
@@ -35,7 +35,7 @@ public class DTOEntityConversions {
         return boatDTO;
     }
 
-    public MarketDTO EntityToDTO(MarketEntity marketEntity) {
+    public static MarketDTO EntityToDTO(MarketEntity marketEntity) {
         MarketDTO marketDTO = new MarketDTO();
 
         marketDTO.setOfferedItem(marketEntity.getOfferedItem());

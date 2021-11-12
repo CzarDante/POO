@@ -1,5 +1,7 @@
 package br.iesb.navigatorapi.model;
 
+import br.iesb.navigatorapi.model.inventory.InventoryEntity;
+
 public class BoatEntity {
 
     private String id;

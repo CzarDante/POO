@@ -3,7 +3,6 @@ package br.iesb.navigatorapi.controller;
 import br.iesb.navigatorapi.dto.BoatDTO;
 import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.BoatEntity;
-import br.iesb.navigatorapi.model.InventoryEntity;
 import br.iesb.navigatorapi.model.UserEntity;
 import br.iesb.navigatorapi.service.AuthService;
 import br.iesb.navigatorapi.service.BoatService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 @RestController
 public class PlayerController {
@@ -25,11 +23,7 @@ public class PlayerController {
     @Autowired
     private PlayerService playerService;
     @Autowired
-    DTOEntityConversions conversions;
-    @Autowired
     private BoatService boatService;
-    @Autowired
-    private IslandService islandService;
 
     @PostMapping("/profile")
     public ResponseEntity profile(@RequestHeader("Token") String token) {
@@ -39,7 +33,7 @@ public class PlayerController {
         if(authToken == null){
             return ResponseEntity.status(400).body("User does not exists");
         }
-        UserDTO filteredUser = conversions.EntityToDTO(authToken);
+        UserDTO filteredUser = DTOEntityConversions.EntityToDTO(authToken);
         return ResponseEntity.ok().body(filteredUser);
     }
 
@@ -58,7 +52,7 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().body(conversions.EntityToDTO(desiredBoat));
+        return ResponseEntity.ok().body(DTOEntityConversions.EntityToDTO(desiredBoat));
     }
 
     @PostMapping("/gather-resource")
@@ -70,11 +64,15 @@ public class PlayerController {
             return ResponseEntity.notFound().build();
         }
 
-        if(!islandService.gatherResource(authToken,time)) {
-            return ResponseEntity.notFound().build();
+        int errorHandler = IslandService.gatherResource(authToken, time);
+        switch(errorHandler) {
+            case 1:
+                return ResponseEntity.status(400).body("There isn't any resources at the island");
+            case 2:
+                return ResponseEntity.status(400).body("This user's gathering is still on cooldown. Try again later.");
         }
 
-        return ResponseEntity.ok().body("Resources gathered");
+        return ResponseEntity.ok().body("Resources gathered successfully!");
     }
 
 
