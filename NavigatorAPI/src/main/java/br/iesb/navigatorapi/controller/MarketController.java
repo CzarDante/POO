@@ -2,9 +2,9 @@ package br.iesb.navigatorapi.controller;
 
 import br.iesb.navigatorapi.dto.MarketDTO;
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
-import br.iesb.navigatorapi.model.MarketEntity;
-import br.iesb.navigatorapi.model.UserEntity;
-import br.iesb.navigatorapi.service.AuthService;
+import br.iesb.navigatorapi.model.market.MarketEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
+import br.iesb.navigatorapi.service.player.AuthService;
 import br.iesb.navigatorapi.service.DTOEntityConversions;
 import br.iesb.navigatorapi.service.market.MarketService;
 import br.iesb.navigatorapi.service.market.TradingService;

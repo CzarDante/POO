@@ -1,6 +1,6 @@
-package br.iesb.navigatorapi.service;
+package br.iesb.navigatorapi.service.player;
 
-import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
 import br.iesb.navigatorapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

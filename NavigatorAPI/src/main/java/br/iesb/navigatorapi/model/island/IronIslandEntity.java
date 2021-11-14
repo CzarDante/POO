@@ -1,5 +1,6 @@
 package br.iesb.navigatorapi.model.island;
 
+import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
 import br.iesb.navigatorapi.service.inventory.InventoryService;
 import br.iesb.navigatorapi.service.inventory.ItemService;
@@ -10,7 +11,7 @@ public class IronIslandEntity extends IslandEntity{
 
     public IronIslandEntity() {
 
-        avaibleResources = InventoryService.createInventory(2);
+        InventoryEntity avaibleResources = InventoryService.createInventory(2);
 
         ItemEntity newItem;
 
@@ -19,12 +20,13 @@ public class IronIslandEntity extends IslandEntity{
         newItem = ItemService.createItem(ItemEntity.ItemID.iron, random.nextInt(100 - 25) + 25);
         InventoryService.addItemToInventory(newItem, avaibleResources);
 
-        String token = UUID.randomUUID().toString();
+        setAvaibleResources(avaibleResources);
 
-        this.id = token;
-        this.distance = random.nextInt(300);
-        this.size = random.nextInt(1000 - 250) + 250;
-        this.islandType = IslandType.iron;
+        String token = UUID.randomUUID().toString();
+        setId(token);
+        setDistance(random.nextInt(300));
+        setSize(random.nextInt(1000 - 250) + 250);
+        setIslandType(IslandType.iron);
     }
 
 

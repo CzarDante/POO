@@ -1,8 +1,8 @@
 package br.iesb.navigatorapi.service.market;
 
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
-import br.iesb.navigatorapi.model.MarketEntity;
-import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.model.market.MarketEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
 import br.iesb.navigatorapi.repository.MarketRepository;
 import br.iesb.navigatorapi.service.DTOEntityConversions;
 import br.iesb.navigatorapi.service.inventory.InventoryService;

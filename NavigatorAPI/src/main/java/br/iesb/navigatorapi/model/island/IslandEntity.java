@@ -5,12 +5,12 @@ import java.util.Random;
 
 public abstract class IslandEntity {
 
-    protected String id;
-    protected IslandType islandType;
-    protected int size;
-    protected int distance;
+    private String id;
+    private IslandType islandType;
+    private int size;
+    private int distance;
 
-    protected InventoryEntity avaibleResources;
+    private InventoryEntity avaibleResources;
 
     public enum IslandType {
         carbonFiber,

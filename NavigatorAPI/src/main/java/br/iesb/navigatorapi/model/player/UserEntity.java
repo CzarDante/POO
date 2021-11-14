@@ -1,8 +1,9 @@
-package br.iesb.navigatorapi.model;
+package br.iesb.navigatorapi.model.player;
 
 //import java.util.ArrayList;
 
 import br.iesb.navigatorapi.dto.BoatDTO;
+import br.iesb.navigatorapi.model.boat.BoatEntity;
 import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 import br.iesb.navigatorapi.model.island.IslandEntity;
 

@@ -1,16 +1,14 @@
-package br.iesb.navigatorapi.service;
+package br.iesb.navigatorapi.service.player;
 
 import br.iesb.navigatorapi.dto.BoatDTO;
-import br.iesb.navigatorapi.model.BoatEntity;
+import br.iesb.navigatorapi.model.boat.BoatEntity;
 import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
-import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
 import br.iesb.navigatorapi.model.island.*;
+import br.iesb.navigatorapi.service.DTOEntityConversions;
 import br.iesb.navigatorapi.service.inventory.InventoryService;
 import br.iesb.navigatorapi.service.inventory.ItemService;
-import br.iesb.navigatorapi.service.island.IslandService;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +32,7 @@ public class PlayerService {
         //Criando itens hardcoded para testar o resto das coisas
         ItemEntity newItem;
         for(ItemEntity.ItemID itemID : ItemEntity.ItemID.values()) {
-            newItem = ItemService.createItem(itemID, 100);
+            newItem = ItemService.createItem(itemID, 1000);
             InventoryService.addItemToInventory(newItem, newInventory);
         }
         newPlayer.setInventory(newInventory);
@@ -53,19 +51,15 @@ public class PlayerService {
         switch (IslandEntity.IslandType.values()[random.nextInt(IslandEntity.IslandType.values().length)]) {
             case carbonFiber:
                 CarbonFiberIslandEntity carbonFiberIslandEntity = new CarbonFiberIslandEntity();
-                //islandsRepository.setCarbonFiberIslandsInMemory(carbonFiberIslandEntity);
                 return carbonFiberIslandEntity;
             case copper:
                 CopperIslandEntity copperIslandEntity = new CopperIslandEntity();
-                //islandsRepository.setCopperIslandsInMemory(copperIslandEntity);
                 return copperIslandEntity;
             case iron:
                 IronIslandEntity ironIslandEntity = new IronIslandEntity();
-                //islandsRepository.setIronIslandsInMemory(ironIslandEntity);
                 return ironIslandEntity;
             case steel:
                 SteelIslandEntity steelIslandEntity = new SteelIslandEntity();
-                //islandsRepository.setSteelIslandsInMemory(steelIslandEntity);
                 return steelIslandEntity;
         }
 

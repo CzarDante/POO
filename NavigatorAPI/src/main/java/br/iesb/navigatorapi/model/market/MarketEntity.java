@@ -1,4 +1,4 @@
-package br.iesb.navigatorapi.model;
+package br.iesb.navigatorapi.model.market;
 
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
 

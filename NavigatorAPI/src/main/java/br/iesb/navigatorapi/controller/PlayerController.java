@@ -2,12 +2,12 @@ package br.iesb.navigatorapi.controller;
 
 import br.iesb.navigatorapi.dto.BoatDTO;
 import br.iesb.navigatorapi.dto.UserDTO;
-import br.iesb.navigatorapi.model.BoatEntity;
-import br.iesb.navigatorapi.model.UserEntity;
-import br.iesb.navigatorapi.service.AuthService;
-import br.iesb.navigatorapi.service.BoatService;
+import br.iesb.navigatorapi.model.boat.BoatEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
+import br.iesb.navigatorapi.service.player.AuthService;
+import br.iesb.navigatorapi.service.boat.BoatService;
 import br.iesb.navigatorapi.service.DTOEntityConversions;
-import br.iesb.navigatorapi.service.PlayerService;
+import br.iesb.navigatorapi.service.player.PlayerService;
 import br.iesb.navigatorapi.service.island.IslandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +39,6 @@ public class PlayerController {
 
     @PostMapping("/create-boat")
     public ResponseEntity<BoatDTO> createBoat(@RequestHeader("Token") String token, @RequestParam BoatEntity.boatID id) {
-
 
         UserEntity authToken = authService.findUserByToken(token);
 

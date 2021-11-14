@@ -1,11 +1,10 @@
-package br.iesb.navigatorapi.service;
+package br.iesb.navigatorapi.service.boat;
 
-import br.iesb.navigatorapi.model.BoatEntity;
+import br.iesb.navigatorapi.model.boat.BoatEntity;
 import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
 import br.iesb.navigatorapi.service.inventory.InventoryService;
 import br.iesb.navigatorapi.service.inventory.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +25,7 @@ public class BoatService {
                 InventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(5);
-                newBoat.setMaxDistance(100);
+                newBoat.setMaxTravelDistance(100);
 
                 break;
             case sailboat:
@@ -37,7 +36,7 @@ public class BoatService {
                 InventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(10);
-                newBoat.setMaxDistance(200);
+                newBoat.setMaxTravelDistance(200);
                 break;
             case brigantine:
                 requiredToCraft = InventoryService.createInventory(2);
@@ -46,7 +45,7 @@ public class BoatService {
                 requiredItem = ItemService.createItem(ItemEntity.ItemID.copper, 200);
                 InventoryService.addItemToInventory(requiredItem, requiredToCraft);
                 cargo.setSize(15);
-                newBoat.setMaxDistance(300);
+                newBoat.setMaxTravelDistance(300);
                 break;
             case galleon:
                 requiredToCraft = InventoryService.createInventory(5);
@@ -62,7 +61,7 @@ public class BoatService {
                 InventoryService.addItemToInventory(requiredItem, requiredToCraft);
 
                 cargo.setSize(20);
-                newBoat.setMaxDistance(400);
+                newBoat.setMaxTravelDistance(400);
                 break;
         }
 

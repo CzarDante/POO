@@ -3,9 +3,9 @@ package br.iesb.navigatorapi.service;
 import br.iesb.navigatorapi.dto.BoatDTO;
 import br.iesb.navigatorapi.dto.MarketDTO;
 import br.iesb.navigatorapi.dto.UserDTO;
-import br.iesb.navigatorapi.model.BoatEntity;
-import br.iesb.navigatorapi.model.MarketEntity;
-import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.model.boat.BoatEntity;
+import br.iesb.navigatorapi.model.market.MarketEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,7 +28,7 @@ public class DTOEntityConversions {
 
         boatDTO.setCargo(boatEntity.getCargo());
         boatDTO.setId(boatEntity.getId());
-        boatDTO.setMaxDistance(boatEntity.getMaxDistance());
+        boatDTO.setMaxDistance(boatEntity.getMaxTravelDistance());
         boatDTO.setType(boatEntity.getType());
         boatDTO.setTotalDistanceTravaled(boatEntity.getTotalDistanceTravaled());
 

@@ -11,8 +11,6 @@ public class UserDTO {
     private String name;
     private InventoryEntity inventory = new InventoryEntity();
     private String currentIsland;
-    //private IslandEntity currentIsland;
-    //private List<IslandEntity> closeIslands = new ArrayList<IslandEntity>();
     private List<String> closeIslands = new ArrayList<String>();
 
     private ArrayList<BoatDTO> boats;

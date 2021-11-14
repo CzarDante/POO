@@ -2,9 +2,9 @@ package br.iesb.navigatorapi.service.market;
 
 import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
-import br.iesb.navigatorapi.model.MarketEntity;
-import br.iesb.navigatorapi.model.UserEntity;
-import br.iesb.navigatorapi.service.AuthService;
+import br.iesb.navigatorapi.model.market.MarketEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
+import br.iesb.navigatorapi.service.player.AuthService;
 import br.iesb.navigatorapi.service.inventory.InventoryService;
 import br.iesb.navigatorapi.service.inventory.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;

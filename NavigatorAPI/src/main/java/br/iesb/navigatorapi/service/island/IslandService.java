@@ -1,16 +1,13 @@
 package br.iesb.navigatorapi.service.island;
 
-import br.iesb.navigatorapi.model.UserEntity;
-import br.iesb.navigatorapi.model.inventory.InventoryEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
 import br.iesb.navigatorapi.model.inventory.ItemEntity;
 import br.iesb.navigatorapi.model.island.IslandEntity;
-import br.iesb.navigatorapi.service.PlayerService;
-import br.iesb.navigatorapi.service.inventory.InventoryService;
+import br.iesb.navigatorapi.service.player.PlayerService;
 import br.iesb.navigatorapi.service.market.TradingService;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
-import java.util.Random;
 
 @Service
 public abstract class IslandService {
