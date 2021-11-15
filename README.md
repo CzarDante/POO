@@ -1,5 +1,5 @@
 # NavigatorAPI
-Uma API gamificada com sobre exploração e sobrevivencia em que seu objetivo como player e desbravar o mar atras de ilhas para conseguir recursos e conseguir assim construir barcos mais fortes. Com um sistema de mercado global em que os player poderam comerciar os itens com outros players (Mercado à ser implementado na versão P2).
+Uma API gamificada com sobre exploração e sobrevivencia em que seu objetivo como player e desbravar o mar atras de ilhas para conseguir recursos e conseguir assim construir barcos mais fortes. Com um sistema de mercado global em que os player poderam comerciar os itens com outros players.
 
 # Rotas
 
