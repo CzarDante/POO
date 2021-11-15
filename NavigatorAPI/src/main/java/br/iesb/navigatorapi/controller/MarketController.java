@@ -56,7 +56,7 @@ public class MarketController {
         UserEntity player = this.authService.findUserByToken(item.getSellerID());
 
         if(player == null){
-            return ResponseEntity.status(400).body("User does not exists");
+            return ResponseEntity.status(404).body("User does not exists");
         }
 
         MarketEntity response = this.marketService.postOffer(item, player);
@@ -79,9 +79,9 @@ public class MarketController {
         int errorHandler = tradingService.buyItem(quantity, tradeID, buyer);
         switch(errorHandler) {
             case 1:
-                return ResponseEntity.status(400).body("There isn't any offers in the market with the informed tradeID");
+                return ResponseEntity.status(404).body("There isn't any offers in the market with the informed tradeID");
             case 2:
-                return ResponseEntity.status(400).body("It seems the seller for that trade doesn't exist anymore. The offer has been removed.");
+                return ResponseEntity.status(404).body("It seems the seller for that trade doesn't exist anymore. The offer has been removed.");
             case 3:
                 return ResponseEntity.status(400).body("You don't have enough items to finish the trade.");
         }

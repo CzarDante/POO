@@ -23,12 +23,6 @@ public class CarbonFiberIslandEntity extends IslandEntity{
 
         String token = UUID.randomUUID().toString();
 
-        /*
-        this.id = token;
-        this.distance = random.nextInt(300);
-        this.size = random.nextInt(1000 - 250) + 250;
-        this.islandType = IslandType.carbonFiber;
-         */
         setId(token);
         setDistance(random.nextInt(1000));
         setSize(random.nextInt(1000 - 250) + 250);

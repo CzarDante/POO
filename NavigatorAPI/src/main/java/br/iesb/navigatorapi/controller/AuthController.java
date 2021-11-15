@@ -23,8 +23,6 @@ public class AuthController {
 
         return ResponseEntity.ok().body(userToken);
 
-//        stmt = c.createStatement();
-//        ResultSet rs = stmt.executeQuery( "select * from public.\"player\" WHERE token=usertoken");
     }
 
 }

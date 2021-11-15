@@ -32,7 +32,7 @@ public class PlayerController {
         UserEntity authToken = authService.findUserByToken(token);
 
         if(authToken == null){
-            return ResponseEntity.status(400).body("User does not exists");
+            return ResponseEntity.status(404).body("User does not exists");
         }
         UserDTO filteredUser = DTOEntityConversions.EntityToDTO(authToken);
         return ResponseEntity.ok().body(filteredUser);
@@ -69,7 +69,7 @@ public class PlayerController {
             case 1:
                 return ResponseEntity.status(400).body("There isn't any resources at the island");
             case 2:
-                return ResponseEntity.status(400).body("This user's gathering is still on cooldown. Try again later.");
+                return ResponseEntity.status(401).body("This user's gathering is still on cooldown. Try again later.");
         }
 
         return ResponseEntity.ok().body("Resources gathered successfully!");
@@ -86,11 +86,11 @@ public class PlayerController {
         int errorHandler = NavigationService.navigateToIsland(authToken, boatID, islandID);
         switch (errorHandler){
             case 1:
-                return ResponseEntity.status(400).body("Couldn't find any close islands with the informed ID.");
+                return ResponseEntity.status(404).body("Couldn't find any close islands with the informed ID.");
             case 2:
-                return ResponseEntity.status(400).body("Couldn't find any boats with the informed ID.");
+                return ResponseEntity.status(404).body("Couldn't find any boats with the informed ID.");
             case 3:
-                return ResponseEntity.status(400).body("Can't use the boat with the informed ID.");
+                return ResponseEntity.status(401).body("Can't use the boat with the informed ID.");
             case 4:
                 return ResponseEntity.status(400).body("The distance to the island is greater than the max travel distance of the boat.");
         }
