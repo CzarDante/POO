@@ -21,8 +21,10 @@ public class AuthController {
         if(userToken == null)
             return ResponseEntity.notFound().build();
 
-
         return ResponseEntity.ok().body(userToken);
+
+//        stmt = c.createStatement();
+//        ResultSet rs = stmt.executeQuery( "select * from public.\"player\" WHERE token=usertoken");
     }
 
 }
