@@ -16,7 +16,9 @@ public class DTOEntityConversions {
 
         userDTO.setName(userEntity.getName());
         userDTO.setInventory(userEntity.getInventory());
-        userDTO.setBoats(userEntity.getBoats());
+        for(BoatEntity boat : userEntity.getBoats()) {
+            userDTO.setBoats(EntityToDTO(boat));
+        }
         userDTO.setCurrentIsland(userEntity.getCurrentIsland());
         userDTO.setCloseIslands(userEntity.getCloseIslands());
 
@@ -31,6 +33,7 @@ public class DTOEntityConversions {
         boatDTO.setMaxDistance(boatEntity.getMaxTravelDistance());
         boatDTO.setType(boatEntity.getType());
         boatDTO.setTotalDistanceTravaled(boatEntity.getTotalDistanceTravaled());
+        boatDTO.setHealth(boatEntity.getHealth());
 
         return boatDTO;
     }

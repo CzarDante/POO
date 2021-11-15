@@ -14,7 +14,7 @@ public class UserEntity {
     private String name;
     private String token;
     private InventoryEntity inventory = new InventoryEntity();
-    private ArrayList<BoatDTO> boats = new ArrayList<BoatDTO>();
+    private List<BoatEntity> boats = new ArrayList<BoatEntity>();
     private long lootCooldown;
 
     private int forageSpeed;
@@ -46,12 +46,12 @@ public class UserEntity {
         this.inventory = inventory;
     }
 
-    public ArrayList<BoatDTO> getBoats() {
+    public List<BoatEntity> getBoats() {
         return boats;
     }
 
-    public void setBoats(ArrayList<BoatDTO> boats) {
-        this.boats = boats;
+    public void setBoats(BoatEntity boatEntity) {
+        this.boats.add(boatEntity);
     }
 
     public IslandEntity getCurrentIsland() {

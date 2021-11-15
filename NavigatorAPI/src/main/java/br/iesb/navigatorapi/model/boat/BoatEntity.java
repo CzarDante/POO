@@ -1,8 +1,9 @@
 package br.iesb.navigatorapi.model.boat;
 
 import br.iesb.navigatorapi.model.inventory.InventoryEntity;
+import br.iesb.navigatorapi.model.inventory.ItemEntity;
 
-public class BoatEntity {
+public abstract class BoatEntity {
 
     private String id;
     private boatID type;

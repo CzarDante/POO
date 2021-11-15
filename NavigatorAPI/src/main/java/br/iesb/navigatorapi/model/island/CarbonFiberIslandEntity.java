@@ -30,7 +30,7 @@ public class CarbonFiberIslandEntity extends IslandEntity{
         this.islandType = IslandType.carbonFiber;
          */
         setId(token);
-        setDistance(random.nextInt(300));
+        setDistance(random.nextInt(1000));
         setSize(random.nextInt(1000 - 250) + 250);
         setIslandType(IslandType.carbonFiber);
     }

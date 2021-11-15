@@ -49,4 +49,33 @@ public abstract class IslandService {
 
         return isEmpty;
     }
+
+    public static boolean isIslandClose(UserEntity player, String islandID) {
+
+        if(player.getCurrentIsland().getId().equals(islandID)) {
+            return false;
+        }
+
+        for(IslandEntity island : player.getCloseIslands()) {
+            if(island.getId().equals(islandID))
+                return true;
+        }
+
+        return false;
+    }
+
+    public static IslandEntity getPlayerIsland(UserEntity player, String islandID) {
+        if(player.getCurrentIsland().getId().equals(islandID)) {
+            return player.getCurrentIsland();
+        }
+
+        for(IslandEntity island : player.getCloseIslands()) {
+            if(island.getId().equals(islandID)) {
+                return island;
+            }
+        }
+
+        return null;
+    }
+
 }

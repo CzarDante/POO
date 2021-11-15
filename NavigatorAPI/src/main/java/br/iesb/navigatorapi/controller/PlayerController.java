@@ -4,6 +4,7 @@ import br.iesb.navigatorapi.dto.BoatDTO;
 import br.iesb.navigatorapi.dto.UserDTO;
 import br.iesb.navigatorapi.model.boat.BoatEntity;
 import br.iesb.navigatorapi.model.player.UserEntity;
+import br.iesb.navigatorapi.service.navigation.NavigationService;
 import br.iesb.navigatorapi.service.player.AuthService;
 import br.iesb.navigatorapi.service.boat.BoatService;
 import br.iesb.navigatorapi.service.DTOEntityConversions;
@@ -74,6 +75,29 @@ public class PlayerController {
         return ResponseEntity.ok().body("Resources gathered successfully!");
     }
 
+    @PostMapping("/navigate")
+    public ResponseEntity navigate(@RequestHeader("Token") String token, @RequestParam("boatID") String boatID, @RequestParam("islandID") String islandID) {
+        UserEntity authToken = authService.findUserByToken(token);
+
+        if(authToken == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        int errorHandler = NavigationService.navigateToIsland(authToken, boatID, islandID);
+        switch (errorHandler){
+            case 1:
+                return ResponseEntity.status(400).body("Couldn't find any close islands with the informed ID.");
+            case 2:
+                return ResponseEntity.status(400).body("Couldn't find any boats with the informed ID.");
+            case 3:
+                return ResponseEntity.status(400).body("Can't use the boat with the informed ID.");
+            case 4:
+                return ResponseEntity.status(400).body("The distance to the island is greater than the max travel distance of the boat.");
+        }
+
+        return ResponseEntity.ok().body("Navigated successfully!");
+
+    }
 
 
     @DeleteMapping("/delete")
@@ -103,5 +127,7 @@ public class PlayerController {
 
         return ResponseEntity.ok().body(items);
     }
+
+
 
 }

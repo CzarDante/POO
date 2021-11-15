@@ -1,5 +1,6 @@
 package br.iesb.navigatorapi.dto;
 
+import br.iesb.navigatorapi.model.boat.BoatEntity;
 import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 import br.iesb.navigatorapi.model.island.IslandEntity;
 
@@ -13,7 +14,7 @@ public class UserDTO {
     private String currentIsland;
     private List<String> closeIslands = new ArrayList<String>();
 
-    private ArrayList<BoatDTO> boats;
+    private List<BoatDTO> boats = new ArrayList<BoatDTO>();
 
     public String getName() {
         return name;
@@ -32,12 +33,12 @@ public class UserDTO {
     }
 
 
-    public ArrayList<BoatDTO> getBoats() {
+    public List<BoatDTO> getBoats() {
         return boats;
     }
 
-    public void setBoats(ArrayList<BoatDTO> boats) {
-        this.boats = boats;
+    public void setBoats(BoatDTO boat) {
+        this.boats.add(boat);
     }
 
     public String getCurrentIsland() {
