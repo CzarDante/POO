@@ -1,6 +1,6 @@
 package br.iesb.navigatorapi.dto;
 
-import br.iesb.navigatorapi.model.ItemEntity;
+import br.iesb.navigatorapi.model.inventory.ItemEntity;
 
 public class MarketDTO {
     private String tradeID;

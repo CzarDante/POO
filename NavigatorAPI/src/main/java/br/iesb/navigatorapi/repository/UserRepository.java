@@ -1,6 +1,6 @@
 package br.iesb.navigatorapi.repository;
 
-import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 

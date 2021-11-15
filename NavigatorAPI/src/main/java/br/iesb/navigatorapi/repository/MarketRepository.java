@@ -1,6 +1,6 @@
 package br.iesb.navigatorapi.repository;
 
-import br.iesb.navigatorapi.model.MarketEntity;
+import br.iesb.navigatorapi.model.market.MarketEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 

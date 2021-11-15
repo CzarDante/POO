@@ -1,17 +1,15 @@
-package br.iesb.navigatorapi.service.Market;
+package br.iesb.navigatorapi.service.market;
 
-import br.iesb.navigatorapi.dto.MarketDTO;
-import br.iesb.navigatorapi.model.ItemEntity;
-import br.iesb.navigatorapi.model.MarketEntity;
-import br.iesb.navigatorapi.model.UserEntity;
+import br.iesb.navigatorapi.model.inventory.ItemEntity;
+import br.iesb.navigatorapi.model.market.MarketEntity;
+import br.iesb.navigatorapi.model.player.UserEntity;
 import br.iesb.navigatorapi.repository.MarketRepository;
 import br.iesb.navigatorapi.service.DTOEntityConversions;
-import br.iesb.navigatorapi.service.InventoryService;
-import br.iesb.navigatorapi.service.ItemService;
+import br.iesb.navigatorapi.service.inventory.InventoryService;
+import br.iesb.navigatorapi.service.inventory.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.error.Mark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +21,6 @@ public class MarketService {
 
     @Autowired
     public MarketRepository marketRepository;
-
-    @Autowired
-    public ItemService itemService;
-
-    @Autowired
-    public InventoryService inventoryService;
-
     @Autowired
     public DTOEntityConversions dtoEntityConversions;
 
@@ -73,14 +64,14 @@ public class MarketService {
             if(itemAtSellerInventory.getResource() == desiredOffer.getOfferedItem().getResource()){
                 foundItem = true;
 
-                boolean hasEnoughQuantity = itemService.isEnoughQuantity(desiredOffer.getOfferedItem(), itemAtSellerInventory);
+                boolean hasEnoughQuantity = ItemService.isEnoughQuantity(desiredOffer.getOfferedItem(), itemAtSellerInventory);
                 if(!hasEnoughQuantity){
                     return null;
                 }
 
-                itemService.subtractQuantity(desiredOffer.getOfferedItem().getQuantity(), itemAtSellerInventory);
+                ItemService.subtractQuantity(desiredOffer.getOfferedItem().getQuantity(), itemAtSellerInventory);
                 if(itemAtSellerInventory.getQuantity() <= 0) {
-                    inventoryService.removeItem(itemAtSellerInventory.getResource(), seller.getInventory());
+                    InventoryService.removeItem(itemAtSellerInventory.getResource(), seller.getInventory());
                 }
 
                 break;

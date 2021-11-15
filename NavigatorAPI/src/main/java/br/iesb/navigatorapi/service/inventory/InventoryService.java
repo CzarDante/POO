@@ -1,15 +1,13 @@
-package br.iesb.navigatorapi.service;
+package br.iesb.navigatorapi.service.inventory;
 
-import br.iesb.navigatorapi.model.InventoryEntity;
-import br.iesb.navigatorapi.model.ItemEntity;
+import br.iesb.navigatorapi.model.inventory.InventoryEntity;
+import br.iesb.navigatorapi.model.inventory.ItemEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class InventoryService {
 
-    ItemService itemService = new ItemService();
-
-    public InventoryEntity createInventory(int size) {
+    public static InventoryEntity createInventory(int size) {
 
         InventoryEntity newInventory = new InventoryEntity();
         newInventory.setSize(size);
@@ -17,13 +15,13 @@ public class InventoryService {
 
     }
 
-    public boolean addItemToInventory(ItemEntity itemToAdd, InventoryEntity inventoryMain) {
+    public static boolean addItemToInventory(ItemEntity itemToAdd, InventoryEntity inventoryMain) {
 
         // Procurando o item
         for(ItemEntity itemMain : inventoryMain.getItems()) {
 
             if(itemMain.getResource() == itemToAdd.getResource()) {
-                itemService.addQuantity(itemToAdd.getQuantity(), itemMain);
+                ItemService.addQuantity(itemToAdd.getQuantity(), itemMain);
                 return true;
             }
 
@@ -39,7 +37,7 @@ public class InventoryService {
         return true;
     }
 
-    public boolean addItemToInventory(InventoryEntity inventoryToAdd, InventoryEntity inventoryMain) {
+    public static boolean addItemToInventory(InventoryEntity inventoryToAdd, InventoryEntity inventoryMain) {
 
         for(ItemEntity itemToAdd : inventoryToAdd.getItems()) {
             if(!addItemToInventory(itemToAdd, inventoryMain)) {
@@ -50,7 +48,7 @@ public class InventoryService {
         return true;
     }
 
-    public boolean subtractFromInventory(ItemEntity itemSubtrahend, InventoryEntity inventoryMain) {
+    public static boolean subtractFromInventory(ItemEntity itemSubtrahend, InventoryEntity inventoryMain) {
 
         //Vendo se o item está contido no inventário
         if(isItemContained(itemSubtrahend.getResource(), inventoryMain)) {
@@ -60,8 +58,8 @@ public class InventoryService {
                 if (itemMain.getResource() == itemSubtrahend.getResource()) {
 
                     //Garantir que dá para subtrair
-                    if (itemService.isEnoughQuantity(itemSubtrahend, itemMain)) {
-                        itemService.subtractQuantity(itemSubtrahend.getQuantity(), itemMain);
+                    if (ItemService.isEnoughQuantity(itemSubtrahend, itemMain)) {
+                        ItemService.subtractQuantity(itemSubtrahend.getQuantity(), itemMain);
                         return true;
 
                     // Se o player não tem a quantidade suficiente de itens para poder subtrair
@@ -81,7 +79,7 @@ public class InventoryService {
 
     }
 
-    public boolean subtractFromInventory(InventoryEntity inventorySubtrahend, InventoryEntity inventoryMain) {
+    public static boolean subtractFromInventory(InventoryEntity inventorySubtrahend, InventoryEntity inventoryMain) {
 
         //Só entra na subtração se o player contem todos os itens necessários
         if(!isItemsContained(inventorySubtrahend, inventoryMain)) {
@@ -96,7 +94,7 @@ public class InventoryService {
         return true;
     }
 
-    public boolean removeItem(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
+    public static boolean removeItem(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
 
         //Só entra na remoção se o item está contido no inventário
         if(isItemContained(id, inventoryMain)) {
@@ -115,19 +113,19 @@ public class InventoryService {
         return false;
     }
 
-    public InventoryEntity copyInventory(InventoryEntity inventoryToCopy) {
+    public static InventoryEntity copyInventory(InventoryEntity inventoryToCopy) {
         InventoryEntity newInventory = createInventory(inventoryToCopy.getSize());
 
         ItemEntity itemCopy;
         for(ItemEntity item : inventoryToCopy.getItems()) {
-            itemCopy = itemService.createItem(item.getResource(), item.getQuantity());
+            itemCopy = ItemService.createItem(item.getResource(), item.getQuantity());
             addItemToInventory(itemCopy, newInventory);
         }
 
         return newInventory;
     }
 
-    public ItemEntity getItemInInventory(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
+    public static ItemEntity getItemInInventory(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
 
         for(ItemEntity item : inventoryMain.getItems()) {
             if(item.getResource() == id) {
@@ -138,7 +136,7 @@ public class InventoryService {
         return null;
     }
 
-    public boolean isItemsContained(InventoryEntity inventoryToCompare, InventoryEntity inventoryMain) {
+    public static boolean isItemsContained(InventoryEntity inventoryToCompare, InventoryEntity inventoryMain) {
 
         for(ItemEntity itemToCompare : inventoryToCompare.getItems()) {
 
@@ -146,7 +144,7 @@ public class InventoryService {
             for(ItemEntity itemMain : inventoryMain.getItems()) {
 
                 if(itemMain.getResource() == itemToCompare.getResource()) {
-                    if(itemService.isEnoughQuantity(itemToCompare,itemMain)) {
+                    if(ItemService.isEnoughQuantity(itemToCompare,itemMain)) {
                         validated=true;
                         break;
                     }
@@ -161,7 +159,7 @@ public class InventoryService {
 
     }
 
-    public boolean isItemContained(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
+    public static boolean isItemContained(ItemEntity.ItemID id, InventoryEntity inventoryMain) {
 
         for(ItemEntity item : inventoryMain.getItems()) {
             if(item.getResource() == id)
@@ -170,7 +168,7 @@ public class InventoryService {
         return false;
     }
 
-    public boolean isInventoriesEqual(InventoryEntity inventoryA, InventoryEntity inventoryB) {
+    public static boolean isInventoriesEqual(InventoryEntity inventoryA, InventoryEntity inventoryB) {
         boolean validated = false;
         for(ItemEntity itemA : inventoryA.getItems()) {
 

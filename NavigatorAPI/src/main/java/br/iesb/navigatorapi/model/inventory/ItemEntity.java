@@ -1,4 +1,4 @@
-package br.iesb.navigatorapi.model;
+package br.iesb.navigatorapi.model.inventory;
 
 public class ItemEntity {
 

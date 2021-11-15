@@ -1,10 +1,14 @@
-package br.iesb.navigatorapi.model;
+package br.iesb.navigatorapi.model.player;
 
 //import java.util.ArrayList;
 
 import br.iesb.navigatorapi.dto.BoatDTO;
+import br.iesb.navigatorapi.model.boat.BoatEntity;
+import br.iesb.navigatorapi.model.inventory.InventoryEntity;
+import br.iesb.navigatorapi.model.island.IslandEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserEntity {
     private String name;
@@ -13,8 +17,10 @@ public class UserEntity {
     private ArrayList<BoatDTO> boats = new ArrayList<BoatDTO>();
     private long lootCooldown;
 
-    private String currentIslandID;
-    private ArrayList<String> closeIslandsID = new ArrayList<String>();
+    private int forageSpeed;
+
+    private IslandEntity currentIsland;
+    private List<IslandEntity> closeIslands = new ArrayList<IslandEntity>();
 
     public String getName() {
         return name;
@@ -48,27 +54,35 @@ public class UserEntity {
         this.boats = boats;
     }
 
-    public String getCurrentIslandID() {
-        return currentIslandID;
+    public IslandEntity getCurrentIsland() {
+        return currentIsland;
     }
 
-    public void setCurrentIslandID(String currentIslandID) {
-        this.currentIslandID = currentIslandID;
+    public void setCurrentIsland(IslandEntity currentIsland) {
+        this.currentIsland = currentIsland;
     }
 
-    public ArrayList<String> getCloseIslandsID() {
-        return closeIslandsID;
+    public List<IslandEntity> getCloseIslands() {
+        return closeIslands;
     }
 
-    public void setCloseIslandsID(String closeIslandsID) {
-        this.closeIslandsID.add(closeIslandsID);
+    public void setCloseIslands(IslandEntity islandEntity) {
+        closeIslands.add(islandEntity);
     }
 
     public long getLootCooldown() {
         return lootCooldown;
     }
 
-    public void setLootCooldown(int tempo) {
-        this.lootCooldown = System.currentTimeMillis() + tempo * 60000;
+    public void setLootCooldown(int time) {
+        this.lootCooldown = System.currentTimeMillis() + time * 60000;
+    }
+
+    public int getForageSpeed() {
+        return forageSpeed;
+    }
+
+    public void setForageSpeed(int forageSpeed) {
+        this.forageSpeed = forageSpeed;
     }
 }

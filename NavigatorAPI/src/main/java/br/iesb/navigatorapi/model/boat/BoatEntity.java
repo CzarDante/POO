@@ -1,14 +1,18 @@
-package br.iesb.navigatorapi.model;
+package br.iesb.navigatorapi.model.boat;
+
+import br.iesb.navigatorapi.model.inventory.InventoryEntity;
 
 public class BoatEntity {
 
     private String id;
     private boatID type;
-    private int size;
-    private int maxDistance;
+
+    private int health;
+    private int maxTravelDistance;
     private int totalDistanceTravaled;
-    private InventoryEntity cargo = new InventoryEntity();
-    private InventoryEntity requiredToCraft = new InventoryEntity();
+
+    private InventoryEntity cargo;
+    private InventoryEntity requiredToCraft;
 
     public enum boatID {
         sloop,
@@ -27,20 +31,12 @@ public class BoatEntity {
         this.id = id;
     }
 
-    public int getSize() {
-        return size;
+    public int getMaxTravelDistance() {
+        return maxTravelDistance;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public int getMaxDistance() {
-        return maxDistance;
-    }
-
-    public void setMaxDistance(int maxDistance) {
-        this.maxDistance = maxDistance;
+    public void setMaxTravelDistance(int maxTravelDistance) {
+        this.maxTravelDistance = maxTravelDistance;
     }
 
     public int getTotalDistanceTravaled() {
@@ -73,5 +69,13 @@ public class BoatEntity {
 
     public void setType(boatID type) {
         this.type = type;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

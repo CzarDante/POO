@@ -1,12 +1,10 @@
 package br.iesb.navigatorapi.controller;
 
-import br.iesb.navigatorapi.model.UserEntity;
-import br.iesb.navigatorapi.service.AuthService;
-import br.iesb.navigatorapi.dto.UserDTO;
+import br.iesb.navigatorapi.model.player.UserEntity;
+import br.iesb.navigatorapi.service.player.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 
